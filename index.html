@@ -1,411 +1,75 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Envio de Trabalhos - Univille | Prof. Katherine</title>
-    
-    <!-- Tailwind CSS (Design) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- React e ReactDOM (Motor do Site) -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    
-    <!-- Babel (Para entender o código React no navegador) -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Ícones Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Fontes Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #f1f5f9;
-            font-family: 'Inter', sans-serif;
-            overscroll-behavior-y: none; /* Evita "puxar" a tela no iPhone */
-        }
-        
-        .font-serif-custom {
-            font-family: 'Roboto Slab', serif;
-        }
-
-        .no-select {
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-touch-callout: none;
-        }
-
-        /* Animação de tremor (Shake) quando tenta colar */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-            20%, 40%, 60%, 80% { transform: translateX(4px); }
-        }
-        
-        .shake-animation {
-            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
-            border-color: #ef4444 !important;
-            background-color: #fef2f2 !important;
-        }
-
-        /* Loading girando */
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-custom {
-            animation: spin 1s linear infinite;
-        }
-
-        /* Ajuste para inputs não darem zoom no iPhone */
-        input, textarea {
-            font-size: 16px !important;
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#050914"/>
+<meta name="description" content="Seminário interativo sobre os Três Poderes no Brasil"/>
+<title>Os Três Poderes | Seminário Interativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050914;--panel:rgba(12,22,40,.75);--line:rgba(255,255,255,.105);--soft:rgba(255,255,255,.055);--text:#f4f7ff;--muted:#9ca9c2;--cyan:#6ee7ff;--green:#57f2a1;--gold:#ffd05b;--violet:#9f82ff;--red:#ff788f;--max:1320px;font-family:Inter,system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:var(--bg);color:var(--text);overflow-x:hidden}a{color:inherit}button,a{font:inherit}button{border:0}::selection{background:rgba(110,231,255,.2)}
+body:before{content:"";position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 10% 12%,rgba(54,205,255,.13),transparent 25%),radial-gradient(circle at 91% 14%,rgba(150,116,255,.12),transparent 26%),linear-gradient(180deg,#050914 0%,#07111f 52%,#050914 100%)}
+.grid-bg{position:fixed;inset:0;z-index:-4;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:radial-gradient(circle at 50% 35%,#000 0%,transparent 76%)}
+.halo{position:fixed;width:380px;height:380px;border-radius:50%;left:-190px;top:-190px;z-index:-2;pointer-events:none;background:radial-gradient(circle,rgba(96,219,255,.13),rgba(107,99,255,.045) 44%,transparent 70%);filter:blur(9px);will-change:transform}
+.progress{position:fixed;left:0;top:0;width:100%;height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--gold));transform-origin:0 50%;z-index:1400;box-shadow:0 0 18px rgba(110,231,255,.45)}
+.topbar{position:fixed;z-index:1200;left:50%;top:14px;transform:translateX(-50%);width:min(calc(100% - 28px),1280px);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:11px 13px;border-radius:20px;border:1px solid var(--line);background:rgba(5,10,20,.66);backdrop-filter:blur(18px) saturate(140%);box-shadow:0 18px 58px rgba(0,0,0,.25)}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}.brand-badge{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:Manrope;font-weight:800;letter-spacing:-.04em;background:linear-gradient(145deg,#fff,#a5eeff);color:#081120;box-shadow:0 0 25px rgba(110,231,255,.14)}.brand div{display:grid;line-height:1}.brand strong{font-size:.69rem;letter-spacing:.15em;color:var(--cyan)}.brand span{margin-top:5px;font-weight:700;font-size:.9rem}
+.topbar nav{display:flex;align-items:center;gap:18px}.topbar nav a{text-decoration:none;color:var(--muted);font-size:.86rem;transition:.2s}.topbar nav a:hover{color:white}.present{display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:13px;cursor:pointer;background:linear-gradient(135deg,#d9f9ff,#73e1ff);color:#07111f;font-weight:800}
+.section,.hero{width:min(calc(100% - 32px),var(--max));margin:0 auto;position:relative}
+.hero{min-height:100svh;padding:118px 0 64px;display:grid;grid-template-columns:.93fr 1.07fr;gap:18px;align-items:center}
+.hero-copy{position:relative;z-index:4;max-width:660px}.kicker{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.72rem;letter-spacing:.12em;font-weight:700}.kicker span{color:var(--cyan);border:1px solid rgba(110,231,255,.2);background:rgba(110,231,255,.055);border-radius:999px;padding:6px 9px}.kicker i{display:block;width:36px;height:1px;background:rgba(255,255,255,.18)}
+.hero h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(4.2rem,8vw,8.3rem);line-height:.82;letter-spacing:-.067em;margin:28px 0 26px}.hero h1 em{font-style:normal;background:linear-gradient(105deg,#fff 6%,#9eeeff 45%,#a990ff 80%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:var(--muted);line-height:1.78;font-size:1.05rem;max-width:620px}.hero p strong{color:#edf7ff}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.primary,.secondary{display:inline-flex;align-items:center;gap:9px;border-radius:16px;padding:14px 17px;text-decoration:none;font-weight:800;cursor:pointer;transition:.22s}.primary{background:linear-gradient(135deg,#d8f8ff,#71e2ff);color:#07111f;box-shadow:0 13px 35px rgba(70,212,255,.22)}.secondary{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff}.primary:hover,.secondary:hover{transform:translateY(-3px)}
+.micro{display:flex;gap:14px 20px;flex-wrap:wrap;margin-top:25px}.micro span{font-size:.77rem;color:#8795ae;display:flex;align-items:center;gap:7px}.micro svg{width:15px}
+.hero-scene{height:min(72vh,760px);min-height:540px;position:relative;z-index:2}.hero-scene canvas{width:100%;height:100%;display:block}.scene-tag{position:absolute;padding:8px 11px;border:1px solid var(--line);background:rgba(6,13,25,.72);backdrop-filter:blur(12px);border-radius:999px;font-size:.72rem;color:#c9d4e8;display:flex;align-items:center;gap:8px;box-shadow:0 14px 35px rgba(0,0,0,.25)}.scene-tag i{width:7px;height:7px;border-radius:50%}.t1{left:5%;top:34%}.t2{right:5%;top:31%}.t3{left:48%;bottom:13%}
+.section{padding:124px 0 110px}.section-label{display:flex;align-items:center;gap:12px;margin-bottom:42px;color:#8794ad;text-transform:uppercase;font-size:.7rem;letter-spacing:.11em;font-weight:700}.section-label span{color:var(--cyan);font-weight:800}.section-label i{width:43px;height:1px;background:rgba(255,255,255,.16)}
+.title-row{display:flex;justify-content:space-between;align-items:flex-end;gap:36px;margin-bottom:47px}.title-row h2,.context h2,.checks h2{font-family:Manrope,Inter,sans-serif;font-size:clamp(3rem,6vw,6rem);line-height:.9;letter-spacing:-.055em;margin:0}.title-row h2 span,.context h2 span,.checks h2 span{color:var(--cyan)}.title-row p{margin:0;max-width:450px;color:var(--muted);line-height:1.7}
+.context-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:26px}.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,24,43,.74),rgba(7,14,27,.9));border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.25)}.context{padding:38px}.context>p{max-width:720px;color:var(--muted);line-height:1.78;font-size:1.03rem}.constitution{margin-top:32px;padding:20px 21px;border-radius:20px;background:rgba(110,231,255,.045);border:1px solid rgba(110,231,255,.13);display:grid;grid-template-columns:auto 1fr;gap:18px}.constitution b{font-size:.72rem;letter-spacing:.12em;color:var(--cyan)}.constitution p{margin:0;color:#dce8f8;line-height:1.63;font-family:Manrope;font-weight:600}.stats{padding:25px;display:grid;gap:13px}.stat{padding:21px;border-radius:21px;border:1px solid var(--soft);background:rgba(255,255,255,.025)}.stat.big strong{display:block;font-family:Manrope;font-size:5.7rem;line-height:.85;letter-spacing:-.07em;background:linear-gradient(180deg,#fff,#72e7ff);-webkit-background-clip:text;background-clip:text;color:transparent}.stat span{color:var(--muted);line-height:1.45}.stat.row{display:flex;align-items:center;gap:19px}.stat.row strong{font-size:2.15rem;min-width:88px}
+.powers-layout{display:grid;grid-template-columns:.7fr 1.3fr;gap:22px}.power-list{display:grid;gap:11px;align-content:start}.power-btn{--p:#fff;width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:15px;align-items:center;text-align:left;padding:19px 17px;border-radius:20px;border:1px solid var(--soft);background:rgba(255,255,255,.025);color:var(--text);cursor:pointer;transition:.23s}.power-btn:hover{transform:translateX(4px);background:rgba(255,255,255,.045)}.power-btn.active{border-color:color-mix(in srgb,var(--p) 48%,transparent);box-shadow:inset 3px 0 0 var(--p);background:linear-gradient(100deg,color-mix(in srgb,var(--p) 10%,transparent),rgba(255,255,255,.022))}.power-btn>span{font-size:.69rem;color:var(--p);font-weight:800}.power-btn div{display:grid;gap:4px}.power-btn small{color:var(--muted)}.power-btn svg{width:18px;color:var(--p)}
+.power-detail{--p:#fff;min-height:545px;padding:36px;display:grid;grid-template-columns:.78fr 1.22fr;align-items:center;gap:16px;border-radius:34px;border:1px solid color-mix(in srgb,var(--p) 26%,rgba(255,255,255,.07));background:radial-gradient(circle at 17% 39%,color-mix(in srgb,var(--p) 13%,transparent),transparent 27%),linear-gradient(160deg,rgba(14,25,45,.9),rgba(6,13,25,.96));box-shadow:0 35px 100px rgba(0,0,0,.31);overflow:hidden}.monogram{position:relative;width:min(100%,320px);aspect-ratio:1;margin:auto;display:grid;place-items:center}.monogram .ring{position:absolute;border-radius:50%;border:1px solid color-mix(in srgb,var(--p) 28%,transparent);inset:10%;animation:spin 16s linear infinite}.monogram .ring.r2{inset:25%;border-style:dashed;animation-direction:reverse;animation-duration:10s}.monogram .ring.r3{inset:37%;animation-duration:7s}.monogram svg{width:50px;height:50px;color:var(--p);filter:drop-shadow(0 0 22px color-mix(in srgb,var(--p) 38%,transparent));z-index:3}@keyframes spin{to{transform:rotate(360deg)}}.detail-kicker{font-size:.7rem;color:var(--p);letter-spacing:.13em;font-weight:800}.detail h3{font-family:Manrope;font-size:clamp(2.4rem,4vw,4.7rem);line-height:.94;letter-spacing:-.052em;margin:13px 0 15px}.detail>p{color:var(--muted);line-height:1.72}.detail ul{list-style:none;padding:0;margin:23px 0 0;display:grid;gap:11px}.detail li{display:grid;grid-template-columns:auto 1fr;gap:10px;color:#d8e2f1;line-height:1.52}.detail li svg{width:17px;color:var(--p);margin-top:3px}.phrase{display:inline-flex;margin-top:25px;padding:10px 13px;border:1px solid color-mix(in srgb,var(--p) 25%,transparent);border-radius:999px;color:var(--p);background:color-mix(in srgb,var(--p) 6%,transparent);font-weight:800;font-size:.8rem}
+.sphere-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.sphere{position:relative;min-height:455px;padding:29px;border:1px solid var(--line);border-radius:27px;background:linear-gradient(180deg,rgba(13,24,43,.8),rgba(7,14,27,.94));overflow:hidden;box-shadow:0 28px 80px rgba(0,0,0,.22)}.sphere:before{content:"";position:absolute;width:235px;height:235px;border-radius:50%;right:-80px;top:-80px;filter:blur(5px);opacity:.12}.sphere.f:before{background:var(--cyan)}.sphere.e:before{background:var(--gold)}.sphere.m:before{background:var(--violet)}.sphere>span{font-size:.7rem;letter-spacing:.12em;color:var(--muted);font-weight:800}.sphere>svg{display:block;margin-top:35px;width:48px;height:48px;stroke-width:1.35}.f>svg{color:var(--cyan)}.e>svg{color:var(--gold)}.m>svg{color:var(--violet)}.sphere h3{font-family:Manrope;font-size:1.9rem;letter-spacing:-.03em;margin:14px 0 28px}.sphere dl{margin:0;display:grid;gap:11px}.sphere dl div{padding:13px;border-radius:16px;border:1px solid var(--soft);background:rgba(255,255,255,.023)}.sphere dt{font-size:.67rem;letter-spacing:.09em;text-transform:uppercase;color:#74819a;font-weight:800}.sphere dd{margin:5px 0 0;color:#dbe4f4;font-size:.89rem;line-height:1.4}
+.checks-grid{display:grid;grid-template-columns:.88fr 1.12fr;gap:26px;align-items:center}.checks>p{max-width:580px;color:var(--muted);line-height:1.76}.check-list{display:grid;gap:10px;margin-top:32px}.check{display:grid;grid-template-columns:42px 1fr;gap:14px;padding:15px 16px;border:1px solid var(--soft);border-radius:18px;background:rgba(255,255,255,.023)}.check>span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--cyan);background:rgba(110,231,255,.06);border:1px solid rgba(110,231,255,.13);font-size:.68rem;font-weight:800}.check h4{margin:0 0 4px;font-size:.9rem}.check p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.5}
+.network{position:relative;width:min(100%,660px);aspect-ratio:1.18;margin:auto;border:1px solid var(--line);border-radius:34px;background:radial-gradient(circle at 50% 48%,rgba(86,214,255,.09),transparent 30%),linear-gradient(180deg,rgba(12,23,42,.76),rgba(6,13,25,.94));box-shadow:0 32px 90px rgba(0,0,0,.27);overflow:hidden}.network:before,.network:after{content:"";position:absolute;left:50%;top:49%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.055);border-radius:50%;animation:orbit 18s linear infinite}.network:before{width:58%;height:58%}.network:after{width:82%;height:82%;animation-direction:reverse;animation-duration:26s}@keyframes orbit{to{transform:translate(-50%,-50%) rotate(360deg)}}.core,.node{position:absolute;border-radius:50%;display:grid;place-items:center;align-content:center;text-align:center;z-index:3;border:1px solid var(--line);background:rgba(8,17,31,.93);box-shadow:0 20px 55px rgba(0,0,0,.28)}.core{left:50%;top:49%;transform:translate(-50%,-50%);width:150px;height:150px;background:radial-gradient(circle at 35% 25%,rgba(110,231,255,.28),rgba(8,17,31,.95) 67%)}.core svg{width:40px;color:var(--cyan)}.core strong{font-size:.88rem;margin-top:4px}.core small{color:var(--muted);font-size:.64rem}.node{width:122px;height:122px;gap:7px}.node svg{width:30px;height:30px}.node b{font-size:.76rem}.n1{left:50%;top:5%;transform:translateX(-50%);color:var(--green)}.n2{left:7%;bottom:7%;color:var(--gold)}.n3{right:7%;bottom:7%;color:var(--violet)}.network svg.links{position:absolute;inset:0;width:100%;height:100%;z-index:1}.network svg.links path{fill:none;stroke:rgba(130,198,255,.26);stroke-width:1.7;stroke-dasharray:6 10;animation:dash 12s linear infinite}@keyframes dash{to{stroke-dashoffset:-160}}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(6,minmax(210px,1fr));gap:17px;overflow-x:auto;padding:28px 3px 20px}.timeline:before{content:"";position:absolute;left:20px;right:20px;top:66px;height:1px;background:linear-gradient(90deg,transparent,rgba(110,231,255,.3),rgba(159,130,255,.3),transparent)}.time{position:relative;min-height:305px;padding:29px 19px 21px;border:1px solid var(--line);border-radius:23px;background:linear-gradient(180deg,rgba(12,23,42,.82),rgba(6,13,25,.94));box-shadow:0 20px 55px rgba(0,0,0,.2)}.time:before{content:"";position:absolute;left:22px;top:-11px;width:22px;height:22px;border-radius:50%;background:#07111f;border:1px solid rgba(110,231,255,.35)}.time:after{content:"";position:absolute;left:29px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}.time .year{display:inline-block;margin-top:7px;color:var(--cyan);font-weight:800;letter-spacing:.07em}.time h3{font-size:1.16rem;margin:19px 0 11px}.time p{margin:0;color:var(--muted);line-height:1.65;font-size:.88rem}
+.problem{padding:52px;border:1px solid var(--line);border-radius:35px;background:radial-gradient(circle at 10% 4%,rgba(255,120,143,.08),transparent 25%),radial-gradient(circle at 92% 92%,rgba(87,242,161,.08),transparent 27%),linear-gradient(160deg,rgba(12,23,42,.88),rgba(6,12,23,.97));box-shadow:0 38px 100px rgba(0,0,0,.31)}.problem .help{color:var(--cyan);width:55px;height:55px}.problem-kicker{display:block;margin-top:17px;color:var(--muted);font-size:.69rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800}.problem h2{font-family:Manrope;font-size:clamp(2.4rem,5vw,5.25rem);line-height:.98;letter-spacing:-.055em;max-width:1080px;margin:14px 0 39px}.problem h2 em{font-style:normal;color:#ff94a8}.answers{display:grid;grid-template-columns:1fr 1fr;gap:15px}.answer{padding:24px;border:1px solid var(--soft);border-radius:21px;background:rgba(255,255,255,.023)}.answer>span{font-size:.66rem;letter-spacing:.12em;font-weight:800}.answer.bad span{color:#ff91a5}.answer.good span{color:#65f4aa}.answer h3{font-size:1.48rem;margin:8px 0 9px}.answer p{margin:0;color:var(--muted);line-height:1.64}.thesis{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:start;margin-top:17px;padding:21px;border-radius:21px;border:1px solid rgba(110,231,255,.13);background:rgba(110,231,255,.04)}.thesis svg{width:24px;color:var(--cyan)}.thesis p{margin:0;color:#dce5f5;line-height:1.68}
+.quiz{border:1px solid var(--line);border-radius:31px;background:linear-gradient(180deg,rgba(12,23,42,.84),rgba(6,13,25,.96));box-shadow:0 32px 90px rgba(0,0,0,.27);overflow:hidden}.quiz-head{display:flex;justify-content:space-between;padding:15px 19px;border-bottom:1px solid var(--soft);font-size:.68rem;letter-spacing:.11em;color:var(--muted)}.quiz-head b{color:var(--cyan)}.quiz-body{padding:36px}.quiz-body h3{font-family:Manrope;font-size:clamp(1.55rem,3vw,2.6rem);letter-spacing:-.035em;max-width:850px;margin:0 0 26px}.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.opt{display:flex;gap:11px;align-items:center;text-align:left;padding:16px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.022);color:#dbe5f4;cursor:pointer;transition:.2s}.opt:hover{transform:translateY(-3px);background:rgba(255,255,255,.045)}.opt span{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.055);font-size:.7rem;font-weight:800}.opt.correct{border-color:rgba(87,242,161,.4);background:rgba(87,242,161,.08)}.opt.wrong{border-color:rgba(255,120,143,.4);background:rgba(255,120,143,.08)}.opt.dim{opacity:.35}.result{min-height:310px;display:grid;place-items:center;align-content:center;text-align:center;padding:38px}.result svg{color:var(--gold);width:42px;height:42px}.result h3{font-size:3.8rem;margin:10px 0 3px}.result p{color:var(--muted);max-width:550px}.result button{margin-top:12px;padding:11px 15px;border-radius:13px;cursor:pointer;background:linear-gradient(135deg,#d8f8ff,#71e2ff);color:#07111f;font-weight:800}
+.sources{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.source{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px;padding:16px 17px;border:1px solid var(--soft);border-radius:17px;background:rgba(255,255,255,.022);text-decoration:none;transition:.2s}.source:hover{transform:translateY(-3px);border-color:rgba(110,231,255,.2);background:rgba(110,231,255,.04)}.source span{font-size:.66rem;color:var(--cyan);font-weight:800;letter-spacing:.09em}.source strong{font-size:.88rem}.source svg{width:17px;color:#77849c}.credits{margin-top:45px;padding:23px;border-top:1px solid var(--soft);display:flex;gap:16px;align-items:center}.cej-mark{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#fff,#b8f2ff);color:#081120;font-family:Manrope;font-size:1.2rem;font-weight:800}.credits div{display:grid;gap:4px}.credits span{font-size:.65rem;letter-spacing:.12em;color:var(--cyan);font-weight:800}.credits strong{font-size:1rem}.credits small{color:var(--muted)}
+footer{width:min(calc(100% - 32px),var(--max));margin:0 auto 34px;padding:23px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:17px;align-items:center;color:var(--muted);font-size:.8rem}footer strong{color:white;letter-spacing:.08em}footer p{margin:0;text-align:center}footer a{text-decoration:none;color:var(--cyan)}
+.present-controls{position:fixed;right:20px;bottom:20px;z-index:1500;display:flex;align-items:center;gap:7px;padding:8px;border:1px solid var(--line);border-radius:17px;background:rgba(4,9,17,.84);backdrop-filter:blur(14px);box-shadow:0 20px 50px rgba(0,0,0,.35)}.present-controls button{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.05);color:white;cursor:pointer}.present-controls span{min-width:52px;text-align:center;color:var(--muted);font-size:.73rem}.presentation .topbar{opacity:.08;pointer-events:none}.presentation .section{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,1,.36,1)}.reveal.visible{opacity:1;transform:none}
+@media(max-width:1080px){.hero{grid-template-columns:1fr;padding-top:122px}.hero-scene{height:640px}.context-grid,.checks-grid,.powers-layout{grid-template-columns:1fr}.power-list{grid-template-columns:repeat(3,1fr)}.power-detail{grid-template-columns:.75fr 1.25fr}.sphere-grid{grid-template-columns:1fr 1fr}.sphere:last-child{grid-column:1/-1}.opts{grid-template-columns:1fr}}
+@media(max-width:760px){.topbar{top:8px;width:calc(100% - 16px)}.topbar nav a{display:none}.hero,.section{width:min(calc(100% - 22px),var(--max))}.hero h1{font-size:clamp(3.4rem,17vw,5.8rem)}.hero-scene{height:500px;min-height:440px}.section{padding:91px 0 76px}.title-row{display:grid;gap:17px}.title-row h2,.context h2,.checks h2{font-size:clamp(2.8rem,13vw,5rem)}.context{padding:25px}.constitution{grid-template-columns:1fr}.stat.big strong{font-size:4.5rem}.power-list{grid-template-columns:1fr}.power-detail{grid-template-columns:1fr;padding:24px;min-height:auto}.monogram{max-width:230px}.detail h3{font-size:2.65rem}.sphere-grid{grid-template-columns:1fr}.sphere:last-child{grid-column:auto}.sphere{min-height:auto}.network{min-height:470px;aspect-ratio:1}.node{width:102px;height:102px}.core{width:127px;height:127px}.n2{left:2%}.n3{right:2%}.problem{padding:27px}.answers{grid-template-columns:1fr}.problem h2{font-size:clamp(2.3rem,10vw,4rem)}.sources{grid-template-columns:1fr}.credits{align-items:flex-start}.cej-mark{width:56px;height:56px}.scene-tag{font-size:.62rem}.t1{left:0}.t2{right:0}footer{grid-template-columns:1fr;text-align:center}footer p{text-align:center}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<script type="importmap">
+{"imports":{"react":"https://esm.sh/react@19.1.1","react-dom/client":"https://esm.sh/react-dom@19.1.1/client","htm":"https://esm.sh/htm@3.1.1","framer-motion":"https://esm.sh/framer-motion@12.23.12?external=react,react-dom","three":"https://esm.sh/three@0.179.1","lucide-react":"https://esm.sh/lucide-react@0.544.0?external=react","lenis":"https://esm.sh/lenis@1.3.11"}}</script>
 </head>
-<body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-
-        // Componente para renderizar ícones via CDN
-        const Icon = ({ name, size = 24, className = "" }) => {
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            }, [name]);
-            
-            return <i data-lucide={name} width={size} height={size} className={className}></i>;
-        };
-
-        const App = () => {
-            const [formData, setFormData] = useState({
-                nome: '',
-                turma: '',
-                titulo: '',
-                conteudo: ''
-            });
-            const [wordCount, setWordCount] = useState(0);
-            const [pasteAttempts, setPasteAttempts] = useState(0); 
-            const [isShake, setIsShake] = useState(false);
-            const [alertMessage, setAlertMessage] = useState(null);
-            
-            // Estados de envio
-            const [isSending, setIsSending] = useState(false);
-            const [sendSuccess, setSendSuccess] = useState(false);
-
-            // EMAIL CONFIGURADO
-            const PROFESSOR_EMAIL = "samucopl@gmail.com";
-
-            // Contador de palavras inteligente
-            const countWords = (text) => {
-                if (!text) return 0;
-                const cleanText = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g, " ");
-                return cleanText.trim().split(/\s+/).filter(word => word.length > 0).length;
-            };
-
-            useEffect(() => {
-                setWordCount(countWords(formData.conteudo));
-            }, [formData.conteudo]);
-
-            const showAlert = (message, type = 'error') => {
-                setAlertMessage({ text: message, type });
-                setTimeout(() => setAlertMessage(null), 4000);
-            };
-
-            const triggerShake = () => {
-                setIsShake(true);
-                setTimeout(() => setIsShake(false), 400);
-            };
-
-            const handleChange = (e) => {
-                const { name, value } = e.target;
-                setFormData(prev => ({ ...prev, [name]: value }));
-            };
-
-            const handleBlockedAction = (e, action) => {
-                e.preventDefault();
-                setPasteAttempts(prev => prev + 1);
-                triggerShake();
-                // Tenta vibrar o celular (feedback tátil)
-                if (navigator.vibrate) navigator.vibrate(200);
-                showAlert(
-                    <span><strong>Ação Bloqueada:</strong> {action} não é permitido. Digite manualmente.</span>,
-                    "error"
-                );
-            };
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setIsSending(true);
-
-                // Relatório de segurança
-                const report = `
-----------------------------------------
-RELATÓRIO DE INTEGRIDADE
-----------------------------------------
-Tentativas de Colar: ${pasteAttempts} ${pasteAttempts > 0 ? '⚠️(ALERTA)' : '✅'}
-Total de Palavras: ${wordCount}
-Navegador: ${navigator.userAgent}
-                `;
-
-                // Dados para o FormSubmit
-                const dataToSend = {
-                    _subject: `[TRABALHO] ${formData.titulo} - ${formData.nome}`,
-                    _template: "table",
-                    _captcha: "false",
-                    Nome_Aluno: formData.nome,
-                    Turma: formData.turma,
-                    Titulo_Trabalho: formData.titulo,
-                    Conteudo_Trabalho: formData.conteudo,
-                    _Relatorio_Anti_Plagio: report
-                };
-
-                try {
-                    // Envio silencioso (AJAX)
-                    const response = await fetch(`https://formsubmit.co/ajax/${PROFESSOR_EMAIL}`, {
-                        method: "POST",
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(dataToSend)
-                    });
-
-                    if (response.ok) {
-                        setSendSuccess(true);
-                        showAlert("Trabalho enviado com sucesso para a professora!", "success");
-                    } else {
-                        throw new Error("Erro no envio");
-                    }
-                } catch (error) {
-                    showAlert("Erro ao conectar com servidor. Tente novamente.", "error");
-                    console.error(error);
-                } finally {
-                    setIsSending(false);
-                }
-            };
-
-            // Tela de Sucesso
-            if (sendSuccess) {
-                return (
-                    <div className="min-h-screen flex items-center justify-center bg-slate-50 font-sans p-4">
-                        <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md w-full border border-green-100">
-                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
-                                <Icon name="check" size={40} />
-                            </div>
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2">Trabalho Entregue!</h2>
-                            <p className="text-gray-600 mb-6">
-                                Seus dados foram enviados com segurança para a Professora Katherine. Pode fechar esta página.
-                            </p>
-                            <button 
-                                onClick={() => window.location.reload()}
-                                className="text-indigo-600 font-semibold hover:underline"
-                            >
-                                Enviar outro trabalho
-                            </button>
-                        </div>
-                    </div>
-                );
-            }
-
-            return (
-                <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
-                    
-                    {/* Header */}
-                    <header className="bg-[#1e3a8a] text-white shadow-lg no-select sticky top-0 z-30">
-                        <div className="max-w-5xl mx-auto px-4 py-4 md:py-6 flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-white/10 p-2 rounded-lg text-[#f97316]">
-                                    <Icon name="book-open" size={24} />
-                                </div>
-                                <div>
-                                    <h1 className="text-lg md:text-2xl font-bold leading-tight">
-                                        Portal de Avaliação
-                                    </h1>
-                                    <p className="text-xs md:text-sm text-blue-200 opacity-90">
-                                        Prof. Katherine • Univille
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="hidden sm:block">
-                                <span className="text-[10px] uppercase tracking-wider bg-black/20 px-2 py-1 rounded text-blue-100 flex items-center gap-1">
-                                    <Icon name="shield" size={10} />
-                                    Envio Seguro Automático
-                                </span>
-                            </div>
-                        </div>
-                    </header>
-
-                    <main className="flex-grow p-3 md:p-6 lg:p-8">
-                        <div className="max-w-4xl mx-auto space-y-6">
-                            
-                            {/* Passos */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 no-select">
-                                <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-100 flex items-center gap-3">
-                                    <div className="bg-blue-50 p-2 rounded-md text-blue-600">
-                                        <Icon name="user" size={18} />
-                                    </div>
-                                    <span className="text-sm font-semibold text-gray-700">1. Identifique-se</span>
-                                </div>
-                                <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-100 flex items-center gap-3">
-                                    <div className="bg-orange-50 p-2 rounded-md text-orange-600">
-                                        <Icon name="edit-3" size={18} />
-                                    </div>
-                                    <span className="text-sm font-semibold text-gray-700">2. Escreva</span>
-                                </div>
-                                <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-100 flex items-center gap-3">
-                                    <div className="bg-green-50 p-2 rounded-md text-green-600">
-                                        <Icon name="mail" size={18} />
-                                    </div>
-                                    <span className="text-sm font-semibold text-gray-700">3. Enviar (Automático)</span>
-                                </div>
-                            </div>
-
-                            {/* Formulário Card */}
-                            <div className="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden">
-                                <form onSubmit={handleSubmit} className="flex flex-col">
-                                    
-                                    {/* Campos de Identificação */}
-                                    <div className="p-5 md:p-8 bg-white space-y-5">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <div className="space-y-1">
-                                                <label className="text-sm font-semibold text-gray-600 flex items-center gap-1">
-                                                    <Icon name="user" size={14} />&nbsp;Nome Completo
-                                                </label>
-                                                <input 
-                                                    type="text" 
-                                                    name="nome" 
-                                                    required
-                                                    disabled={isSending}
-                                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] outline-none transition bg-gray-50 focus:bg-white text-gray-900 disabled:opacity-50"
-                                                    placeholder="Seu nome"
-                                                    value={formData.nome}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                            <div className="space-y-1">
-                                                <label className="text-sm font-semibold text-gray-600 flex items-center gap-1">
-                                                    <Icon name="users" size={14} />&nbsp;Turma
-                                                </label>
-                                                <input 
-                                                    type="text" 
-                                                    name="turma" 
-                                                    required
-                                                    disabled={isSending}
-                                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] outline-none transition bg-gray-50 focus:bg-white text-gray-900 disabled:opacity-50"
-                                                    placeholder="Sua turma"
-                                                    value={formData.turma}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-1">
-                                            <label className="text-sm font-semibold text-gray-600 flex items-center gap-1">
-                                                <Icon name="type" size={14} />&nbsp;Título do Trabalho
-                                            </label>
-                                            <input 
-                                                type="text" 
-                                                name="titulo" 
-                                                required
-                                                disabled={isSending}
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] outline-none transition bg-gray-50 focus:bg-white font-medium text-gray-900 disabled:opacity-50"
-                                                placeholder="Título do trabalho"
-                                                value={formData.titulo}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Editor de Texto */}
-                                    <div className="bg-gray-50 p-5 md:p-8 border-t border-gray-200">
-                                        <div className="flex justify-between items-end mb-2">
-                                            <label className="text-sm font-bold text-gray-700">Desenvolvimento</label>
-                                            <span className={`text-xs px-2 py-1 rounded-full font-medium ${wordCount === 0 ? 'bg-gray-200 text-gray-600' : 'bg-green-100 text-green-700'}`}>
-                                                {wordCount} palavras
-                                            </span>
-                                        </div>
-                                        
-                                        <textarea 
-                                            name="conteudo"
-                                            required
-                                            disabled={isSending}
-                                            className={`w-full h-[60vh] md:h-96 px-5 py-5 rounded-lg border-2 outline-none transition-all resize-none font-serif-custom text-lg leading-relaxed text-gray-800 placeholder-gray-400 shadow-inner disabled:opacity-50
-                                                ${isShake ? 'shake-animation' : 'border-gray-200 focus:border-[#1e3a8a]'}
-                                            `}
-                                            placeholder="Digite aqui... (Copiar/Colar desativado)"
-                                            value={formData.conteudo}
-                                            onChange={handleChange}
-                                            onPaste={(e) => handleBlockedAction(e, "Colar")}
-                                            onCopy={(e) => handleBlockedAction(e, "Copiar")}
-                                            onCut={(e) => handleBlockedAction(e, "Recortar")}
-                                            onContextMenu={(e) => handleBlockedAction(e, "Menu de Opções")}
-                                            spellCheck="false" 
-                                        ></textarea>
-                                        <p className="text-xs text-center text-gray-400 mt-2 flex items-center justify-center">
-                                            <Icon name="shield" size={12} className="inline mr-1"/>
-                                            Digitação manual obrigatória. Atividades suspeitas são registradas.
-                                        </p>
-                                    </div>
-
-                                    {/* Footer com Botão */}
-                                    <div className="p-5 md:p-8 bg-white border-t border-gray-200">
-                                        <button 
-                                            type="submit"
-                                            disabled={isSending}
-                                            className={`w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all transform flex items-center justify-center gap-2 text-lg
-                                                ${isSending ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#f97316] hover:bg-orange-600 active:bg-orange-700 hover:shadow-xl active:scale-[0.98]'}
-                                            `}
-                                        >
-                                            {isSending ? (
-                                                <>
-                                                    <Icon name="loader-2" size={24} className="animate-spin-custom" />
-                                                    <span>Enviando trabalho...</span>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Icon name="mail" size={24} />
-                                                    <span>Enviar Trabalho Agora</span>
-                                                </>
-                                            )}
-                                        </button>
-                                        <p className="text-xs text-gray-400 text-center mt-3 max-w-md mx-auto">
-                                            Ao clicar, o trabalho será enviado diretamente para a professora. Não é possível editar após o envio.
-                                        </p>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </main>
-
-                    {/* Alerta Toast */}
-                    {alertMessage && (
-                        <div className={`fixed top-4 left-4 right-4 md:left-auto md:right-8 md:w-96 p-4 rounded-lg shadow-2xl flex items-center gap-3 z-50 animate-bounce-in
-                            ${alertMessage.type === 'error' ? 'bg-red-50 text-red-900 border-l-4 border-red-500' : 
-                              alertMessage.type === 'warning' ? 'bg-yellow-50 text-yellow-900 border-l-4 border-yellow-500' : 
-                              'bg-green-50 text-green-900 border-l-4 border-green-500'}
-                        `}>
-                            <div className={alertMessage.type === 'error' ? 'text-red-900' : alertMessage.type === 'warning' ? 'text-yellow-900' : 'text-green-900'}>
-                                <Icon name={alertMessage.type === 'error' ? 'ban' : alertMessage.type === 'warning' ? 'alert-triangle' : 'check-circle'} size={24} />
-                            </div>
-                            <div className="flex-1">
-                                <p className="font-bold text-sm">{alertMessage.type === 'error' ? 'Ação Bloqueada' : 'Aviso'}</p>
-                                <p className="text-sm opacity-90">{alertMessage.text}</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+<body><div id="root"></div>
+<script type="module">
+import React,{useEffect,useRef,useState}from"react";import{createRoot}from"react-dom/client";import htm from"htm";import{motion,AnimatePresence,useScroll,useSpring}from"framer-motion";import*as THREE from"three";import Lenis from"lenis";import{ArrowDown,ArrowLeft,ArrowRight,Balance,BookOpen,Building2,CheckCircle2,ChevronRight,CircleHelp,Crown,ExternalLink,Eye,Landmark,Maximize2,Scale,ShieldCheck,Sparkles,X}from"lucide-react";const html=htm.bind(React.createElement);
+const powers=[{id:"executivo",n:"01",name:"Executivo",role:"Governa e administra",color:"#57f2a1",summary:"Executa as leis, administra o Estado e transforma decisões políticas em ações, serviços e políticas públicas.",items:["Na União, é exercido pelo Presidente da República e seus ministros.","Nos estados, o chefe do Executivo é o governador.","Nos municípios, o chefe do Executivo é o prefeito.","Pode propor projetos, sancionar ou vetar leis e administrar o orçamento dentro das regras legais."],phrase:"Decisão vira ação."},{id:"legislativo",n:"02",name:"Legislativo",role:"Representa, legisla e fiscaliza",color:"#ffd05b",summary:"Cria e debate leis, fiscaliza o Poder Executivo e representa a sociedade e os entes da Federação.",items:["Na União, o Congresso Nacional é formado pela Câmara dos Deputados e pelo Senado Federal.","Nos estados, a função é exercida pelas Assembleias Legislativas.","Nos municípios, pelas Câmaras de Vereadores.","Também analisa orçamento, fiscaliza gastos e participa de mecanismos de controle político."],phrase:"Voz vira regra."},{id:"judiciario",n:"03",name:"Judiciário",role:"Julga e garante direitos",color:"#9f82ff",summary:"Resolve conflitos, interpreta e aplica as leis e protege a Constituição e os direitos fundamentais.",items:["É formado por tribunais e juízes em diferentes ramos e instâncias.","O Supremo Tribunal Federal é o guardião da Constituição Federal.","Pode controlar a constitucionalidade de leis e atos do poder público.","Não existe um Poder Judiciário municipal próprio."],phrase:"Conflito vira decisão."}];
+const history=[["1824","Constituição do Império","A organização incluía quatro poderes: Legislativo, Executivo, Judiciário e Poder Moderador, exercido pelo imperador."],["1891","República","A primeira Constituição republicana consolida a estrutura dos três poderes clássicos no novo regime."],["1937","Estado Novo","A ordem autoritária ampliou a concentração de poder no Executivo e enfraqueceu o equilíbrio institucional."],["1946","Redemocratização","A nova Constituição recompõe a vida democrática e fortalece novamente a separação entre os poderes."],["1964–1985","Regime militar","O período marcou limitações às instituições democráticas e aos mecanismos de participação e controle."],["1988","Constituição Cidadã","A Constituição atual define Legislativo, Executivo e Judiciário como poderes independentes e harmônicos entre si."]];
+const refs=[["Constituição Federal de 1988","https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm"],["Constituição do Império de 1824","https://www.planalto.gov.br/ccivil_03/constituicao/constituicao24.htm"],["Câmara dos Deputados","https://www.camara.leg.br/"],["Senado Federal","https://www12.senado.leg.br/hpsenado"],["Supremo Tribunal Federal","https://portal.stf.jus.br/"],["Conselho Nacional de Justiça","https://www.cnj.jus.br/"],["Presidência da República / Planalto","https://www.gov.br/planalto/pt-br"],["Tribunal Superior Eleitoral","https://www.tse.jus.br/"]];
+const sections=["inicio","contexto","poderes","esferas","equilibrio","historia","problema","quiz","fontes"];
+function ThreeHero(){const mount=useRef(null);useEffect(()=>{const el=mount.current;if(!el)return;const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x050914,.035);const cam=new THREE.PerspectiveCamera(46,el.clientWidth/el.clientHeight,.1,100);cam.position.set(0,1.25,8.4);const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(el.clientWidth,el.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;el.appendChild(renderer.domElement);scene.add(new THREE.AmbientLight(0x93a9c9,.6));const dl=new THREE.DirectionalLight(0xe8f8ff,3);dl.position.set(4,7,5);scene.add(dl);const p1=new THREE.PointLight(0x4fd8ff,40,16);p1.position.set(-4,2,4);scene.add(p1);const p2=new THREE.PointLight(0x9f82ff,34,14);p2.position.set(4,-1,4);scene.add(p2);const p3=new THREE.PointLight(0xffd05b,24,13);p3.position.set(0,5,-3);scene.add(p3);const group=new THREE.Group();scene.add(group);const coreGeo=new THREE.IcosahedronGeometry(1.2,4);const coreMat=new THREE.MeshPhysicalMaterial({color:0x8de8ff,roughness:.1,metalness:.42,clearcoat:1,emissive:0x4fd8ff,emissiveIntensity:.28});const core=new THREE.Mesh(coreGeo,coreMat);group.add(core);const torusMat=(c,o=.38)=>new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:o});const r1=new THREE.Mesh(new THREE.TorusGeometry(1.65,.018,8,120),torusMat(0xffffff,.22));r1.rotation.x=Math.PI/2;group.add(r1);const r2=new THREE.Mesh(new THREE.TorusGeometry(2.1,.014,8,120),torusMat(0x7790ff,.28));r2.rotation.set(.55,.1,.6);group.add(r2);const data=[[-2.65,-.22,.5,0x57f2a1,2.8],[2.65,-.15,.5,0xffd05b,3.1],[0,-1,2.35,0x9f82ff,2.45]];const pillars=data.map(([x,y,z,c,h],idx)=>{const g=new THREE.Group();g.position.set(x,y,z);const box=new THREE.Mesh(new THREE.BoxGeometry(1.12,h,1.12),new THREE.MeshPhysicalMaterial({color:c,roughness:.17,metalness:.6,clearcoat:1,emissive:c,emissiveIntensity:.12}));g.add(box);const cap=new THREE.Mesh(new THREE.CylinderGeometry(.66,.66,.15,6),new THREE.MeshStandardMaterial({color:0xdce7ff,metalness:.72,roughness:.24}));cap.position.y=h/2+.14;g.add(cap);const ring=new THREE.Mesh(new THREE.TorusGeometry(.88,.014,7,80),torusMat(c,.55));ring.rotation.x=Math.PI/2;g.add(ring);g.userData={baseY:y,idx,ring};group.add(g);return g});const sg=new THREE.BufferGeometry(),count=520,arr=new Float32Array(count*3);for(let i=0;i<count;i++){arr[i*3]=(Math.random()-.5)*30;arr[i*3+1]=(Math.random()-.5)*18;arr[i*3+2]=(Math.random()-.5)*28}sg.setAttribute("position",new THREE.BufferAttribute(arr,3));const stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xbde9ff,size:.035,transparent:true,opacity:.58}));scene.add(stars);let mx=0,my=0;const move=e=>{const r=el.getBoundingClientRect();mx=((e.clientX-r.left)/r.width-.5)*2;my=((e.clientY-r.top)/r.height-.5)*2};el.addEventListener("pointermove",move);const clock=new THREE.Clock();let raf;const loop=()=>{const t=clock.getElapsedTime();core.rotation.x+=.0016;core.rotation.y+=.0025;core.scale.setScalar(1+Math.sin(t*1.6)*.024);r1.rotation.z+=.0018;r2.rotation.z-=.0011;pillars.forEach((g,i)=>{g.position.y=g.userData.baseY+Math.sin(t*.8+i)*.075;g.rotation.y+=.002;g.userData.ring.rotation.z-=.004});group.rotation.y+=(mx*.2-group.rotation.y)*.035;group.rotation.x+=(-my*.11-group.rotation.x)*.035;stars.rotation.y+=.00022;renderer.render(scene,cam);raf=requestAnimationFrame(loop)};loop();const resize=()=>{cam.aspect=el.clientWidth/el.clientHeight;cam.updateProjectionMatrix();renderer.setSize(el.clientWidth,el.clientHeight)};addEventListener("resize",resize);return()=>{cancelAnimationFrame(raf);removeEventListener("resize",resize);el.removeEventListener("pointermove",move);renderer.dispose();el.innerHTML=""}},[]);return html`<div ref=${mount} style=${{width:"100%",height:"100%"}}></div>`}
+function Label({n,children}){return html`<div className="section-label"><span>${String(n).padStart(2,"0")}</span><i></i><b>${children}</b></div>`}
+function Reveal({children,className=""}){const r=useRef(null);useEffect(()=>{const el=r.current;if(!el)return;const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){el.classList.add("visible");io.disconnect()}},{threshold:.14});io.observe(el);return()=>io.disconnect()},[]);return html`<div ref=${r} className=${"reveal "+className}>${children}</div>`}
+function IconFor({id}){const C=id==="executivo"?Building2:id==="legislativo"?Landmark:Scale;return html`<${C}/>`}
+function Quiz(){const qs=[["Quem administra o país e executa políticas públicas?",["Legislativo","Executivo","Judiciário"],1],["Quem cria leis e fiscaliza o Executivo?",["Legislativo","Executivo","Judiciário"],0],["Quem protege a Constituição e julga conflitos?",["Executivo","Legislativo","Judiciário"],2],["Por que os poderes são separados?",["Para concentrar decisões","Para evitar abusos e criar equilíbrio","Para eliminar eleições"],1]];const[i,setI]=useState(0),[sel,setSel]=useState(null),[score,setScore]=useState(0),done=i>=qs.length;const choose=j=>{if(sel!==null)return;setSel(j);if(j===qs[i][2])setScore(s=>s+1);setTimeout(()=>{setSel(null);setI(v=>v+1)},760)};return html`<div className="quiz"><div className="quiz-head"><span>QUIZ DA TURMA</span><b>${done?"FIM":(i+1)+" / "+qs.length}</b></div><${AnimatePresence} mode="wait">${!done?html`<${motion.div} key=${i} className="quiz-body" initial=${{opacity:0,x:24}} animate=${{opacity:1,x:0}} exit=${{opacity:0,x:-24}}><h3>${qs[i][0]}</h3><div className="opts">${qs[i][1].map((o,j)=>{let c="opt";if(sel!==null)c+=" "+(j===sel?(j===qs[i][2]?"correct":"wrong"):(j===qs[i][2]?"correct":"dim"));return html`<button className=${c} onClick=${()=>choose(j)}><span>${String.fromCharCode(65+j)}</span>${o}</button>`})}</div></${motion.div}>`:html`<${motion.div} key="done" className="result" initial=${{opacity:0,scale:.95}} animate=${{opacity:1,scale:1}}><${Sparkles}/><h3>${score}/${qs.length}</h3><p>${score===qs.length?"Gabaritou. A democracia sobreviveu ao teste.":"Boa. Agora a turma já sabe onde cada poder entra em cena."}</p><button onClick=${()=>{setI(0);setScore(0);setSel(null)}}>Refazer quiz</button></${motion.div}>`}</${AnimatePresence}></div>`}
+function App(){const[active,setActive]=useState(0),[presenting,setPresenting]=useState(false),[pi,setPi]=useState(0);const{scrollYProgress}=useScroll(),progress=useSpring(scrollYProgress,{stiffness:120,damping:30}),p=powers[active],halo=useRef(null);useEffect(()=>{const lenis=new Lenis({duration:1.05,smoothWheel:true});let raf;const f=t=>{lenis.raf(t);raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f);return()=>{cancelAnimationFrame(raf);lenis.destroy()}},[]);useEffect(()=>{const m=e=>halo.current?.animate({transform:"translate3d("+(e.clientX-190)+"px,"+(e.clientY-190)+"px,0)"},{duration:500,fill:"forwards"});addEventListener("pointermove",m);return()=>removeEventListener("pointermove",m)},[]);const go=d=>{const n=Math.max(0,Math.min(sections.length-1,pi+d));setPi(n);document.getElementById(sections[n])?.scrollIntoView({behavior:"smooth"})};useEffect(()=>{if(!presenting)return;const k=e=>{if(["ArrowRight","ArrowDown","PageDown"," "].includes(e.key)){e.preventDefault();go(1)}if(["ArrowLeft","ArrowUp","PageUp"].includes(e.key)){e.preventDefault();go(-1)}if(e.key==="Escape")setPresenting(false)};addEventListener("keydown",k);return()=>removeEventListener("keydown",k)});const start=async()=>{setPresenting(true);setPi(0);document.getElementById("inicio")?.scrollIntoView();try{await document.documentElement.requestFullscreen?.()}catch{}};const stop=async()=>{setPresenting(false);try{if(document.fullscreenElement)await document.exitFullscreen()}catch{}};return html`<div className=${presenting?"presentation":""}><div className="grid-bg"></div><div ref=${halo} className="halo"></div><${motion.div} className="progress" style=${{scaleX:progress}}/><header className="topbar"><a className="brand" href="#inicio"><div className="brand-badge">CEJ</div><div><strong>HISTÓRIA</strong><span>Os Três Poderes</span></div></a><nav><a href="#poderes">Poderes</a><a href="#equilibrio">Equilíbrio</a><a href="#historia">História</a><a href="#problema">Questão</a><button className="present" onClick=${start}><${Maximize2} size=${15}/> Apresentar</button></nav></header><main>
+<section id="inicio" className="hero"><div className="hero-copy"><${motion.div} className="kicker" initial=${{opacity:0,y:15}} animate=${{opacity:1,y:0}}><span>GRUPO 1</span><i></i> EDUCAÇÃO POLÍTICA · HISTÓRIA</${motion.div}><${motion.h1} initial=${{opacity:0,y:26}} animate=${{opacity:1,y:0}} transition=${{delay:.14,duration:.8}}>Quem governa<br/>o <em>Brasil?</em></${motion.h1}><${motion.p} initial=${{opacity:0}} animate=${{opacity:1}} transition=${{delay:.42}}>Uma experiência interativa sobre <strong>Executivo</strong>, <strong>Legislativo</strong> e <strong>Judiciário</strong>, sua evolução histórica e o motivo de o poder não ficar concentrado em uma única instituição.</${motion.p}><${motion.div} className="hero-actions" initial=${{opacity:0,y:16}} animate=${{opacity:1,y:0}} transition=${{delay:.58}}><a className="primary" href="#contexto">Começar seminário <${ArrowDown} size=${17}/></a><button className="secondary" onClick=${start}><${Maximize2} size=${17}/> Modo apresentação</button></${motion.div}><div className="micro"><span><${ShieldCheck}/> Constituição</span><span><${Eye}/> Freios e contrapesos</span><span><${BookOpen}/> História</span></div></div><${motion.div} className="hero-scene" initial=${{opacity:0,scale:.95}} animate=${{opacity:1,scale:1}} transition=${{duration:1,delay:.12}}><${ThreeHero}/><div className="scene-tag t1"><i style=${{background:"#57f2a1"}}></i>Executivo</div><div className="scene-tag t2"><i style=${{background:"#ffd05b"}}></i>Legislativo</div><div className="scene-tag t3"><i style=${{background:"#9f82ff"}}></i>Judiciário</div></${motion.div}></section>
+<section id="contexto" className="section"><${Label} n=${1}>O ponto de partida</${Label}><div className="context-grid"><${Reveal} className="context panel"><h2>Três poderes.<br/><span>Um Estado.</span></h2><p>A Constituição de 1988 organiza o Estado brasileiro com três Poderes independentes e harmônicos. Cada um possui funções próprias e, ao mesmo tempo, mecanismos para limitar e fiscalizar os demais.</p><div className="constitution"><b>ART. 2º</b><p>“São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário.”</p></div></${Reveal}><${Reveal} className="stats panel"><div className="stat big"><strong>3</strong><span>poderes constitucionais</span></div><div className="stat row"><strong>1</strong><span>objetivo central<br/>evitar abuso e concentração</span></div><div className="stat row"><strong>1988</strong><span>Constituição<br/>atualmente em vigor</span></div></${Reveal}></div></section>
+<section id="poderes" className="section"><${Label} n=${2}>Conheça cada poder</${Label}><${Reveal} className="title-row"><h2>Quem faz <span>o quê?</span></h2><p>Selecione um poder para abrir sua função, estrutura e exemplos.</p></${Reveal}><div className="powers-layout"><${Reveal} className="power-list">${powers.map((x,i)=>html`<button className=${"power-btn "+(active===i?"active":"")} style=${{"--p":x.color}} onClick=${()=>setActive(i)}><span>${x.n}</span><div><strong>${x.name}</strong><small>${x.role}</small></div><${ChevronRight}/></button>`)}</${Reveal}><${AnimatePresence} mode="wait"><${motion.article} key=${p.id} className="power-detail" style=${{"--p":p.color}} initial=${{opacity:0,x:30,scale:.985}} animate=${{opacity:1,x:0,scale:1}} exit=${{opacity:0,x:-25}}><div className="monogram"><i className="ring"></i><i className="ring r2"></i><i className="ring r3"></i><${IconFor} id=${p.id}/></div><div className="detail"><span className="detail-kicker">${p.n} / ${p.name.toUpperCase()}</span><h3>${p.role}</h3><p>${p.summary}</p><ul>${p.items.map(t=>html`<li><${CheckCircle2}/><span>${t}</span></li>`)}</ul><div className="phrase">${p.phrase}</div></div></${motion.article}></${AnimatePresence}></div></section>
+<section id="esferas" className="section"><${Label} n=${3}>Da União ao município</${Label}><${Reveal} className="title-row"><h2>O mesmo sistema,<br/><span>três escalas.</span></h2><p>Veja como os poderes aparecem em diferentes níveis da Federação.</p></${Reveal}><div className="sphere-grid"><${Reveal} className="sphere f"><span>UNIÃO</span><${Crown}/><h3>Brasil</h3><dl><div><dt>Executivo</dt><dd>Presidente da República</dd></div><div><dt>Legislativo</dt><dd>Congresso Nacional: Câmara + Senado</dd></div><div><dt>Judiciário</dt><dd>STF, STJ e Justiça Federal</dd></div></dl></${Reveal}><${Reveal} className="sphere e"><span>ESTADO</span><${Landmark}/><h3>Santa Catarina</h3><dl><div><dt>Executivo</dt><dd>Governador</dd></div><div><dt>Legislativo</dt><dd>Assembleia Legislativa</dd></div><div><dt>Judiciário</dt><dd>Tribunal de Justiça</dd></div></dl></${Reveal}><${Reveal} className="sphere m"><span>MUNICÍPIO</span><${Building2}/><h3>Jaraguá do Sul</h3><dl><div><dt>Executivo</dt><dd>Prefeito</dd></div><div><dt>Legislativo</dt><dd>Câmara de Vereadores</dd></div><div><dt>Judiciário</dt><dd>Não possui Judiciário próprio</dd></div></dl></${Reveal}></div></section>
+<section id="equilibrio" className="section"><${Label} n=${4}>Freios e contrapesos</${Label}><div className="checks-grid"><${Reveal} className="checks"><h2>Ninguém manda<br/><span>sozinho.</span></h2><p>Separar poderes não significa isolá-los. Eles se relacionam, fiscalizam e limitam uns aos outros para reduzir o risco de abusos.</p><div className="check-list"><div className="check"><span>01</span><div><h4>Legislativo → Executivo</h4><p>Fiscaliza, aprova orçamento e cria leis.</p></div></div><div className="check"><span>02</span><div><h4>Executivo → Legislativo</h4><p>Pode sancionar ou vetar projetos aprovados.</p></div></div><div className="check"><span>03</span><div><h4>Judiciário → Poder público</h4><p>Pode afastar atos incompatíveis com a Constituição.</p></div></div></div></${Reveal}><${Reveal}><div className="network"><div className="core"><${Balance}/><strong>Equilíbrio</strong><small>freios + contrapesos</small></div><div className="node n1"><${Building2}/><b>Executivo</b></div><div className="node n2"><${Landmark}/><b>Legislativo</b></div><div className="node n3"><${Scale}/><b>Judiciário</b></div><svg className="links" viewBox="0 0 600 470" preserveAspectRatio="none"><path d="M300 90 C230 130 160 215 125 345"/><path d="M300 90 C370 130 440 215 475 345"/><path d="M125 345 C245 405 355 405 475 345"/></svg></div></${Reveal}></div></section>
+<section id="historia" className="section"><${Label} n=${5}>Relação histórica</${Label}><${Reveal} className="title-row"><h2>O equilíbrio foi<br/><span>construído no tempo.</span></h2><p>A organização dos poderes mudou junto com os regimes políticos e as Constituições brasileiras.</p></${Reveal}><div className="timeline">${history.map(h=>html`<${Reveal} className="time"><span className="year">${h[0]}</span><h3>${h[1]}</h3><p>${h[2]}</p></${Reveal}>`)}</div></section>
+<section id="problema" className="section"><${Label} n=${6}>Questão-problema</${Label}><${Reveal} className="problem"><${CircleHelp} className="help"/><span className="problem-kicker">A pergunta central do trabalho</span><h2>Por que é importante que o poder do Estado <em>não fique concentrado</em> em uma única instituição?</h2><div className="answers"><div className="answer bad"><span>CONCENTRAÇÃO</span><h3>Mais risco</h3><p>Facilita abusos, enfraquece a fiscalização, reduz controles e pode ameaçar direitos e liberdades.</p></div><div className="answer good"><span>SEPARAÇÃO</span><h3>Mais equilíbrio</h3><p>Distribui responsabilidades, cria fiscalização mútua e torna decisões públicas sujeitas a limites constitucionais.</p></div></div><div className="thesis"><${ShieldCheck}/><p><strong>Conclusão:</strong> o Brasil não é governado por uma única pessoa ou instituição. A democracia depende de instituições diferentes, com funções próprias, limites e controles recíprocos.</p></div></${Reveal}></section>
+<section id="quiz" className="section"><${Label} n=${7}>Hora de envolver a turma</${Label}><${Reveal} className="title-row"><h2>Mini quiz<br/><span>relâmpago.</span></h2><p>Quatro perguntas para fechar a apresentação com participação da sala.</p></${Reveal}><${Reveal}><${Quiz}/></${Reveal}></section>
+<section id="fontes" className="section"><${Label} n=${8}>Pesquisa e referências</${Label}><${Reveal} className="title-row"><h2>Fontes<br/><span>institucionais.</span></h2><p>O trabalho prioriza as fontes oficiais sugeridas no projeto da disciplina.</p></${Reveal}><div className="sources">${refs.map((r,i)=>html`<${Reveal}><a className="source" href=${r[1]} target="_blank" rel="noreferrer"><span>${String(i+1).padStart(2,"0")}</span><strong>${r[0]}</strong><${ExternalLink}/></a></${Reveal}>`)}</div><${Reveal} className="credits"><div className="cej-mark">CEJ</div><div><span>COLÉGIO EVANGÉLICO JARAGUÁ</span><strong>Educação Política, Poderes e Voto no Brasil</strong><small>História · Grupo 1 · Seminário</small></div></${Reveal}></section>
+</main><footer><strong>OS TRÊS PODERES</strong><p>Seminário interativo de História · Grupo 1</p><a href="#inicio">Voltar ao topo ↑</a></footer>${presenting?html`<div className="present-controls"><button onClick=${()=>go(-1)}><${ArrowLeft}/></button><span>${pi+1} / ${sections.length}</span><button onClick=${()=>go(1)}><${ArrowRight}/></button><button onClick=${stop}><${X}/></button></div>`:null}</div>`}
+createRoot(document.getElementById("root")).render(html`<${App}/>`);
+</script></body></html>
