@@ -6,67 +6,139 @@ import * as THREE from 'three';
 import Lenis from 'lenis';
 import './styles.css';
 
+const IMG = {
+  constitution1824: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Constitui%C3%A7%C3%A3o_de_1824.jpg?width=1000',
+  constitution1891: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Constitui%C3%A7%C3%A3o_da_Rep%C3%BAblica_dos_Estados_Unidos_do_Brasil_de_1891_p._00_(capa).jpg?width=1000',
+  pedro: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/DpedroI-brasil-full.jpg?width=900',
+  vargas: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Getulio_Vargas_(1930).jpg?width=900',
+  constitution1946: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Constitui%C3%A7%C3%A3o_da_Rep%C3%BAblica_dos_Estados_Unidos_do_Brasil_de_1946.pdf/page1-937px-Constitui%C3%A7%C3%A3o_da_Rep%C3%BAblica_dos_Estados_Unidos_do_Brasil_de_1946.pdf.jpg',
+  ulysses1988: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Ulyssesguimaraesconstituicao.jpg?width=1400',
+  promulgacao1988: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Promulga%C3%A7%C3%A3o-Constitui%C3%A7%C3%A3o-1988.jpg?width=1400',
+  congress: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Pal%C3%A1cio_do_Congresso_Nacional_(52780142794).jpg?width=1600',
+};
+
 const COLORS = {
-  executivo: '#57f2a1',
-  legislativo: '#ffd05b',
-  judiciario: '#9f82ff',
+  executivo: '#7a2e2e',
+  legislativo: '#8d6a2b',
+  judiciario: '#315f58',
 };
 
 const powers = [
   {
     id: 'executivo',
-    index: '01',
-    title: 'Executivo',
-    role: 'Governa e administra',
-    summary:
-      'Executa as leis, administra o Estado e transforma decisões políticas em ações, serviços e políticas públicas.',
-    items: [
-      'Na União, é exercido pelo Presidente da República e seus ministros.',
-      'Nos estados, o chefe do Executivo é o governador.',
-      'Nos municípios, o chefe do Executivo é o prefeito.',
-      'Pode propor projetos, sancionar ou vetar leis e administrar o orçamento dentro das regras legais.',
+    number: 'I',
+    title: 'Poder Executivo',
+    short: 'Executar e administrar',
+    lead: 'Transforma decisões políticas e leis em ação concreta.',
+    body: [
+      'Administra serviços públicos, formula e executa políticas, conduz a máquina estatal e representa o país em diversas relações institucionais.',
+      'Na União, é chefiado pelo Presidente da República; nos estados, pelos governadores; nos municípios, pelos prefeitos.',
     ],
-    phrase: 'Decisão vira ação.',
+    bullets: [
+      'Sanciona ou veta projetos aprovados pelo Legislativo.',
+      'Propõe políticas públicas e administra o orçamento aprovado.',
+      'Pode editar medidas provisórias nos limites previstos pela Constituição.',
+    ],
+    note: 'Função típica: administrar. Funções atípicas existem, mas sempre submetidas à Constituição e ao controle dos outros Poderes.',
   },
   {
     id: 'legislativo',
-    index: '02',
-    title: 'Legislativo',
-    role: 'Representa, legisla e fiscaliza',
-    summary:
-      'Cria e debate leis, fiscaliza o Poder Executivo e representa a sociedade e os entes da Federação.',
-    items: [
-      'Na União, o Congresso Nacional é formado pela Câmara dos Deputados e pelo Senado Federal.',
-      'Nos estados, a função é exercida pelas Assembleias Legislativas.',
-      'Nos municípios, pelas Câmaras de Vereadores.',
-      'Também analisa orçamento, fiscaliza gastos e participa de mecanismos de controle político.',
+    number: 'II',
+    title: 'Poder Legislativo',
+    short: 'Representar, legislar e fiscalizar',
+    lead: 'É a arena institucional onde a sociedade é representada na produção das leis.',
+    body: [
+      'Na esfera federal, o Congresso Nacional é bicameral: Câmara dos Deputados e Senado Federal.',
+      'Além de elaborar leis, o Legislativo fiscaliza o Executivo, examina o orçamento e exerce controles políticos e financeiros.',
     ],
-    phrase: 'Voz vira regra.',
+    bullets: [
+      'Discute, altera e aprova projetos de lei.',
+      'Pode derrubar vetos presidenciais conforme as regras constitucionais.',
+      'Participa de processos de responsabilização política e de aprovação de certas autoridades.',
+    ],
+    note: 'A Câmara representa a população; o Senado representa os estados e o Distrito Federal.',
   },
   {
     id: 'judiciario',
-    index: '03',
-    title: 'Judiciário',
-    role: 'Julga e garante direitos',
-    summary:
-      'Resolve conflitos, interpreta e aplica as leis e protege a Constituição e os direitos fundamentais.',
-    items: [
-      'É formado por tribunais e juízes em diferentes ramos e instâncias.',
-      'O Supremo Tribunal Federal é o guardião da Constituição Federal.',
-      'Pode controlar a constitucionalidade de leis e atos do poder público.',
+    number: 'III',
+    title: 'Poder Judiciário',
+    short: 'Julgar e proteger a ordem constitucional',
+    lead: 'Resolve conflitos e garante que o poder público atue dentro das regras.',
+    body: [
+      'É formado por juízes e tribunais de diferentes ramos e instâncias. No topo da ordem constitucional está o Supremo Tribunal Federal.',
+      'Sua função não é governar nem criar leis em sentido político, mas interpretar e aplicar o direito aos casos concretos e controlar a constitucionalidade.',
+    ],
+    bullets: [
+      'Julga conflitos entre pessoas, instituições e entes públicos.',
+      'Pode declarar incompatíveis com a Constituição leis e atos do poder público.',
       'Não existe um Poder Judiciário municipal próprio.',
     ],
-    phrase: 'Conflito vira decisão.',
+    note: 'O STF é chamado de guardião da Constituição porque exerce papel central no controle constitucional.',
   },
 ];
 
-const history = [
-  ['1824', 'Constituição do Império', 'Havia quatro poderes: Legislativo, Executivo, Judiciário e Poder Moderador, exercido pelo imperador.'],
-  ['1891', 'República', 'A primeira Constituição republicana consolida a estrutura dos três poderes clássicos no novo regime.'],
-  ['1937', 'Estado Novo', 'A ordem autoritária ampliou a concentração de poder no Executivo e enfraqueceu o equilíbrio institucional.'],
-  ['1946', 'Redemocratização', 'A nova Constituição recompõe a vida democrática e fortalece novamente a separação entre os poderes.'],
-  ['1964–1985', 'Regime militar', 'O período marcou limitações às instituições democráticas e aos mecanismos de participação e controle.'],
-  ['1988', 'Constituição Cidadã', 'A Constituição atual define Legislativo, Executivo e Judiciário como poderes independentes e harmônicos entre si.'],
+const constitutions = [
+  {
+    year: '1824',
+    title: 'Império e Poder Moderador',
+    tone: 'Império',
+    text: 'A primeira Constituição brasileira estruturou quatro poderes: Legislativo, Executivo, Judiciário e Moderador. O Poder Moderador, atribuído ao imperador, funcionava como uma chave de coordenação e de forte autoridade sobre o sistema.',
+    image: IMG.constitution1824,
+    source: 'Arquivo Nacional / Wikimedia Commons',
+  },
+  {
+    year: '1891',
+    title: 'República e três Poderes',
+    tone: 'República',
+    text: 'Com a República, desaparece o Poder Moderador e ganha forma o desenho republicano clássico de Executivo, Legislativo e Judiciário, associado ao federalismo presidencialista.',
+    image: IMG.constitution1891,
+    source: 'Arquivo Nacional / Wikimedia Commons',
+  },
+  {
+    year: '1934',
+    title: 'Nova ordem constitucional',
+    tone: 'Constituição',
+    text: 'A Constituição de 1934 preservou a separação institucional e ampliou a presença de temas sociais e trabalhistas na ordem constitucional brasileira.',
+  },
+  {
+    year: '1937',
+    title: 'Estado Novo e concentração',
+    tone: 'Autoritarismo',
+    text: 'No Estado Novo, o equilíbrio entre os Poderes foi profundamente reduzido. O Congresso foi fechado e o Executivo concentrou enorme capacidade de decisão.',
+    image: IMG.vargas,
+    source: 'Wikimedia Commons',
+  },
+  {
+    year: '1946',
+    title: 'Retorno democrático',
+    tone: 'Redemocratização',
+    text: 'A Constituição de 1946 recompôs instituições representativas e reafirmou a separação entre os Poderes após o fim do Estado Novo.',
+    image: IMG.constitution1946,
+    source: 'Arquivo Nacional / Wikimedia Commons',
+  },
+  {
+    year: '1967',
+    title: 'Regime militar',
+    tone: 'Regime',
+    text: 'A Constituição de 1967 surgiu em um contexto de forte limitação das liberdades políticas e de fortalecimento institucional do Executivo. Atos Institucionais alteraram profundamente a vida constitucional do período.',
+  },
+  {
+    year: '1988',
+    title: 'Constituição Cidadã',
+    tone: 'Democracia',
+    text: 'A Constituição de 1988 consolidou a ordem democrática contemporânea e, em seu artigo 2º, definiu Legislativo, Executivo e Judiciário como independentes e harmônicos entre si.',
+    image: IMG.ulysses1988,
+    source: 'Agência Brasil / Wikimedia Commons',
+  },
+];
+
+const glossary = [
+  ['Constituição', 'Norma fundamental que organiza o Estado, define competências e protege direitos.'],
+  ['Sanção', 'Ato pelo qual o chefe do Executivo concorda com um projeto aprovado pelo Legislativo.'],
+  ['Veto', 'Recusa total ou parcial do Executivo a um projeto. O Legislativo pode apreciá-lo.'],
+  ['Bicameralismo', 'Sistema em que o Legislativo federal possui duas Casas: Câmara e Senado.'],
+  ['Inconstitucionalidade', 'Situação em que uma norma ou ato entra em conflito com a Constituição.'],
+  ['Freios e contrapesos', 'Mecanismos de controle recíproco entre instituições para impedir concentração excessiva de poder.'],
 ];
 
 const refs = [
@@ -76,53 +148,53 @@ const refs = [
   ['Senado Federal', 'https://www12.senado.leg.br/hpsenado'],
   ['Supremo Tribunal Federal', 'https://portal.stf.jus.br/'],
   ['Conselho Nacional de Justiça', 'https://www.cnj.jus.br/'],
-  ['Presidência da República / Planalto', 'https://www.gov.br/planalto/pt-br'],
+  ['Presidência da República', 'https://www.gov.br/planalto/pt-br'],
   ['Tribunal Superior Eleitoral', 'https://www.tse.jus.br/'],
+  ['Arquivo Nacional', 'https://www.gov.br/arquivonacional/pt-br'],
+  ['Wikimedia Commons — acervos históricos', 'https://commons.wikimedia.org/'],
 ];
 
-const slideIds = ['inicio', 'contexto', 'poderes', 'esferas', 'equilibrio', 'historia', 'problema', 'quiz', 'fontes'];
+const chapters = ['capa', 'abertura', 'origem', 'poderes', 'equilibrio', 'esferas', 'constituicoes', 'rupturas', 'hoje', 'problema', 'quiz', 'fontes'];
 
-function Icon({ name, size = 24, className = '' }) {
+function Icon({ name, size = 22, className = '' }) {
   const common = {
     width: size,
     height: size,
     viewBox: '0 0 24 24',
     fill: 'none',
     stroke: 'currentColor',
-    strokeWidth: 1.8,
+    strokeWidth: 1.7,
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
     className,
     'aria-hidden': true,
   };
 
-  const shapes = {
+  const paths = {
+    arrow: <><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></>,
     down: <><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></>,
-    expand: <><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M8 21H3v-5"/><path d="M16 21h5v-5"/></>,
-    shield: <><path d="M12 3 4.5 6v5.5c0 4.7 3.2 7.9 7.5 9.5 4.3-1.6 7.5-4.8 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></>,
-    eye: <><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></>,
     book: <><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></>,
-    building: <><path d="M4 21h16"/><path d="M6 21V9l6-4 6 4v12"/><path d="M9 12h.01"/><path d="M12 12h.01"/><path d="M15 12h.01"/><path d="M9 16h.01"/><path d="M15 16h.01"/></>,
-    landmark: <><path d="M3 10h18"/><path d="M5 10v8"/><path d="M9 10v8"/><path d="M15 10v8"/><path d="M19 10v8"/><path d="M2 21h20"/><path d="m12 3 9 4H3z"/></>,
     scale: <><path d="M12 3v18"/><path d="M6 7h12"/><path d="m6 7-3 6h6z"/><path d="m18 7-3 6h6z"/><path d="M8 21h8"/></>,
+    building: <><path d="M4 21h16"/><path d="M6 21V9l6-4 6 4v12"/><path d="M9 12h.01M12 12h.01M15 12h.01M9 16h.01M15 16h.01"/></>,
+    landmark: <><path d="M3 10h18"/><path d="M5 10v8M9 10v8M15 10v8M19 10v8"/><path d="M2 21h20"/><path d="m12 3 9 4H3z"/></>,
+    shield: <><path d="M12 3 4.5 6v5.5c0 4.7 3.2 7.9 7.5 9.5 4.3-1.6 7.5-4.8 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></>,
     check: <path d="m5 12 4 4L19 6"/>,
-    chevron: <path d="m9 18 6-6-6-6"/>,
-    crown: <><path d="m3 7 4 4 5-7 5 7 4-4-2 11H5z"/><path d="M5 18h14"/></>,
-    help: <><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 3.6 2.1c-.9.5-1.4 1-1.4 1.9"/><path d="M12 17h.01"/></>,
+    quote: <><path d="M7 17H4a2 2 0 0 1-2-2v-3a5 5 0 0 1 5-5v2a3 3 0 0 0-3 3h3z"/><path d="M18 17h-3a2 2 0 0 1-2-2v-3a5 5 0 0 1 5-5v2a3 3 0 0 0-3 3h3z"/></>,
     external: <><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></>,
-    spark: <><path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></>,
+    expand: <><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></>,
     left: <><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></>,
     right: <><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></>,
     close: <><path d="m5 5 14 14"/><path d="M19 5 5 19"/></>,
+    spark: <><path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></>,
   };
 
-  return <svg {...common}>{shapes[name]}</svg>;
+  return <svg {...common}>{paths[name]}</svg>;
 }
 
-function SectionLabel({ n, children }) {
+function ChapterLabel({ number, children }) {
   return (
-    <div className="section-label">
-      <span>{String(n).padStart(2, '0')}</span>
+    <div className="chapter-label">
+      <span>CAPÍTULO {String(number).padStart(2, '0')}</span>
       <i />
       <b>{children}</b>
     </div>
@@ -135,27 +207,39 @@ function Reveal({ children, className = '' }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add('visible');
-          io.disconnect();
+          el.classList.add('is-visible');
+          observer.disconnect();
         }
       },
-      { threshold: 0.13 }
+      { threshold: 0.12 }
     );
-    io.observe(el);
-    return () => io.disconnect();
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
 }
 
-function PowerIcon({ id, size = 52 }) {
-  return <Icon name={id === 'executivo' ? 'building' : id === 'legislativo' ? 'landmark' : 'scale'} size={size} />;
+function HistoricalImage({ src, alt, caption, source, className = '' }) {
+  return (
+    <figure className={`historical-image ${className}`}>
+      <div className="photo-shell">
+        <img src={src} alt={alt} loading="lazy" />
+        <span className="photo-corner corner-a" />
+        <span className="photo-corner corner-b" />
+      </div>
+      <figcaption>
+        <strong>{caption}</strong>
+        {source && <span>Fonte da imagem: {source}</span>}
+      </figcaption>
+    </figure>
+  );
 }
 
-function ThreeHero() {
+function BookScene() {
   const mount = useRef(null);
   const [fallback, setFallback] = useState(false);
 
@@ -165,173 +249,174 @@ function ThreeHero() {
 
     let renderer;
     let raf;
-    let onResize;
-    let onMove;
+    let resize;
+    let pointer;
 
     try {
       const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x050914, 0.035);
+      const camera = new THREE.PerspectiveCamera(42, el.clientWidth / el.clientHeight, 0.1, 100);
+      camera.position.set(0, 0.1, 9);
 
-      const camera = new THREE.PerspectiveCamera(46, el.clientWidth / el.clientHeight, 0.1, 100);
-      camera.position.set(0, 1.2, 8.5);
-
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
       renderer.setSize(el.clientWidth, el.clientHeight);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.15;
+      renderer.toneMappingExposure = 1.02;
       el.appendChild(renderer.domElement);
 
-      scene.add(new THREE.AmbientLight(0x9aadc8, 0.68));
+      scene.add(new THREE.AmbientLight(0xf3ddbd, 1.8));
 
-      const key = new THREE.DirectionalLight(0xe8f8ff, 3.2);
-      key.position.set(4, 7, 5);
-      scene.add(key);
+      const warm = new THREE.PointLight(0xffd49c, 35, 20);
+      warm.position.set(-4, 4, 7);
+      scene.add(warm);
 
-      const c1 = new THREE.PointLight(0x4fd8ff, 42, 16);
-      c1.position.set(-4, 2, 4);
-      scene.add(c1);
-
-      const c2 = new THREE.PointLight(0x9f82ff, 36, 14);
-      c2.position.set(4, -1, 4);
-      scene.add(c2);
-
-      const c3 = new THREE.PointLight(0xffd05b, 27, 13);
-      c3.position.set(0, 5, -3);
-      scene.add(c3);
+      const cool = new THREE.PointLight(0x7a9c93, 20, 14);
+      cool.position.set(5, -3, 5);
+      scene.add(cool);
 
       const group = new THREE.Group();
+      group.rotation.set(-0.08, -0.34, -0.02);
       scene.add(group);
 
-      const core = new THREE.Mesh(
-        new THREE.IcosahedronGeometry(1.22, 4),
-        new THREE.MeshPhysicalMaterial({
-          color: 0x8de8ff,
-          roughness: 0.1,
-          metalness: 0.42,
-          clearcoat: 1,
-          emissive: 0x4fd8ff,
-          emissiveIntensity: 0.28,
-        })
-      );
-      group.add(core);
-
-      const ringMaterial = (color, opacity) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity });
-      const ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.7, 0.018, 8, 120), ringMaterial(0xffffff, 0.22));
-      ring1.rotation.x = Math.PI / 2;
-      group.add(ring1);
-
-      const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.15, 0.014, 8, 120), ringMaterial(0x7790ff, 0.3));
-      ring2.rotation.set(0.55, 0.1, 0.6);
-      group.add(ring2);
-
-      const pillarData = [
-        [-2.65, -0.22, 0.5, 0x57f2a1, 2.8],
-        [2.65, -0.15, 0.5, 0xffd05b, 3.1],
-        [0, -1.0, 2.35, 0x9f82ff, 2.45],
-      ];
-
-      const pillars = pillarData.map(([x, y, z, color, h], idx) => {
-        const g = new THREE.Group();
-        g.position.set(x, y, z);
-
-        const box = new THREE.Mesh(
-          new THREE.BoxGeometry(1.12, h, 1.12),
-          new THREE.MeshPhysicalMaterial({
-            color,
-            roughness: 0.17,
-            metalness: 0.6,
-            clearcoat: 1,
-            emissive: color,
-            emissiveIntensity: 0.12,
-          })
-        );
-        g.add(box);
-
-        const cap = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.66, 0.66, 0.15, 6),
-          new THREE.MeshStandardMaterial({ color: 0xdce7ff, metalness: 0.72, roughness: 0.24 })
-        );
-        cap.position.y = h / 2 + 0.14;
-        g.add(cap);
-
-        const orbit = new THREE.Mesh(
-          new THREE.TorusGeometry(0.88, 0.014, 7, 80),
-          ringMaterial(color, 0.55)
-        );
-        orbit.rotation.x = Math.PI / 2;
-        g.add(orbit);
-
-        g.userData = { baseY: y, idx, orbit };
-        group.add(g);
-        return g;
+      const leather = new THREE.MeshPhysicalMaterial({
+        color: 0x4a1f1d,
+        roughness: 0.56,
+        metalness: 0.04,
+        clearcoat: 0.15,
       });
 
-      const count = 480;
-      const starGeo = new THREE.BufferGeometry();
+      const gold = new THREE.MeshStandardMaterial({
+        color: 0xcaa76a,
+        roughness: 0.34,
+        metalness: 0.58,
+      });
+
+      const paper = new THREE.MeshStandardMaterial({
+        color: 0xe7d7b9,
+        roughness: 0.88,
+        metalness: 0,
+      });
+
+      const pages = new THREE.Mesh(new THREE.BoxGeometry(4.18, 5.46, 0.74), paper);
+      pages.position.z = 0;
+      group.add(pages);
+
+      const coverFront = new THREE.Mesh(new THREE.BoxGeometry(4.46, 5.78, 0.16), leather);
+      coverFront.position.z = 0.45;
+      group.add(coverFront);
+
+      const coverBack = new THREE.Mesh(new THREE.BoxGeometry(4.46, 5.78, 0.16), leather);
+      coverBack.position.z = -0.45;
+      group.add(coverBack);
+
+      const spine = new THREE.Mesh(new THREE.BoxGeometry(0.25, 5.76, 0.94), leather);
+      spine.position.set(-2.12, 0, 0);
+      group.add(spine);
+
+      const border = new THREE.Mesh(new THREE.BoxGeometry(3.96, 5.26, 0.026), gold);
+      border.position.z = 0.545;
+      group.add(border);
+
+      const inset = new THREE.Mesh(new THREE.BoxGeometry(3.68, 4.98, 0.032), leather);
+      inset.position.z = 0.565;
+      group.add(inset);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 1400;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#4a1f1d';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#cba968';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(78, 78, 868, 1244);
+      ctx.lineWidth = 3;
+      ctx.strokeRect(105, 105, 814, 1190);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#d8ba79';
+      ctx.font = '600 52px Georgia';
+      ctx.fillText('HISTÓRIA POLÍTICA DO BRASIL', 512, 260);
+      ctx.font = '700 116px Georgia';
+      ctx.fillText('OS TRÊS', 512, 555);
+      ctx.fillText('PODERES', 512, 690);
+      ctx.font = 'italic 45px Georgia';
+      ctx.fillText('1824 · 1891 · 1937 · 1946 · 1988', 512, 865);
+      ctx.font = '500 38px Georgia';
+      ctx.fillText('Executivo · Legislativo · Judiciário', 512, 1055);
+      ctx.font = '600 31px Georgia';
+      ctx.fillText('GRUPO 1 · SEMINÁRIO DE HISTÓRIA', 512, 1195);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const titlePlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(3.64, 5.0),
+        new THREE.MeshBasicMaterial({ map: texture, transparent: false })
+      );
+      titlePlane.position.z = 0.59;
+      group.add(titlePlane);
+
+      const pageLines = [];
+      for (let i = 0; i < 18; i += 1) {
+        const line = new THREE.Mesh(new THREE.BoxGeometry(0.025, 5.28, 0.71), gold);
+        line.position.set(2.1 + Math.sin(i) * 0.008, 0, -0.02 + i * 0.001);
+        line.scale.x = 0.16;
+        line.material = new THREE.MeshStandardMaterial({ color: 0xa88456, roughness: 0.8, metalness: 0.05 });
+        group.add(line);
+        pageLines.push(line);
+      }
+
+      const dustGeo = new THREE.BufferGeometry();
+      const count = 240;
       const points = new Float32Array(count * 3);
       for (let i = 0; i < count; i += 1) {
-        points[i * 3] = (Math.random() - 0.5) * 30;
-        points[i * 3 + 1] = (Math.random() - 0.5) * 18;
-        points[i * 3 + 2] = (Math.random() - 0.5) * 28;
+        points[i * 3] = (Math.random() - 0.5) * 14;
+        points[i * 3 + 1] = (Math.random() - 0.5) * 11;
+        points[i * 3 + 2] = (Math.random() - 0.5) * 10;
       }
-      starGeo.setAttribute('position', new THREE.BufferAttribute(points, 3));
-      const stars = new THREE.Points(
-        starGeo,
-        new THREE.PointsMaterial({ color: 0xbde9ff, size: 0.035, transparent: true, opacity: 0.58 })
+      dustGeo.setAttribute('position', new THREE.BufferAttribute(points, 3));
+      const dust = new THREE.Points(
+        dustGeo,
+        new THREE.PointsMaterial({ color: 0xdac59f, size: 0.025, transparent: true, opacity: 0.48 })
       );
-      scene.add(stars);
+      scene.add(dust);
 
       let mx = 0;
       let my = 0;
-      onMove = (event) => {
+      pointer = (event) => {
         const rect = el.getBoundingClientRect();
         mx = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
         my = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
       };
-      el.addEventListener('pointermove', onMove);
+      el.addEventListener('pointermove', pointer);
 
       const clock = new THREE.Clock();
       const loop = () => {
         const t = clock.getElapsedTime();
-        core.rotation.x += 0.0015;
-        core.rotation.y += 0.0024;
-        core.scale.setScalar(1 + Math.sin(t * 1.6) * 0.024);
-        ring1.rotation.z += 0.0018;
-        ring2.rotation.z -= 0.0011;
-
-        pillars.forEach((g, i) => {
-          g.position.y = g.userData.baseY + Math.sin(t * 0.8 + i) * 0.075;
-          g.rotation.y += 0.002;
-          g.userData.orbit.rotation.z -= 0.004;
-        });
-
-        group.rotation.y += (mx * 0.2 - group.rotation.y) * 0.035;
-        group.rotation.x += (-my * 0.11 - group.rotation.x) * 0.035;
-        stars.rotation.y += 0.00022;
-
+        group.position.y = Math.sin(t * 0.75) * 0.08;
+        group.rotation.y += ((-0.34 + mx * 0.13) - group.rotation.y) * 0.035;
+        group.rotation.x += ((-0.08 - my * 0.07) - group.rotation.x) * 0.035;
+        dust.rotation.y += 0.0004;
         renderer.render(scene, camera);
         raf = requestAnimationFrame(loop);
       };
       loop();
 
-      onResize = () => {
-        if (!el || !renderer) return;
+      resize = () => {
         camera.aspect = el.clientWidth / el.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(el.clientWidth, el.clientHeight);
       };
-      window.addEventListener('resize', onResize);
+      window.addEventListener('resize', resize);
     } catch (error) {
-      console.error('Falha no WebGL, usando fallback:', error);
+      console.error('Falha ao renderizar o livro 3D:', error);
       setFallback(true);
     }
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
-      if (onResize) window.removeEventListener('resize', onResize);
-      if (onMove && el) el.removeEventListener('pointermove', onMove);
+      if (resize) window.removeEventListener('resize', resize);
+      if (pointer && el) el.removeEventListener('pointermove', pointer);
       renderer?.dispose();
       if (el) el.innerHTML = '';
     };
@@ -339,24 +424,30 @@ function ThreeHero() {
 
   if (fallback) {
     return (
-      <div className="fallback-3d">
-        <div className="fallback-core">BRASIL</div>
-        <span className="orb o1">Executivo</span>
-        <span className="orb o2">Legislativo</span>
-        <span className="orb o3">Judiciário</span>
+      <div className="book-fallback">
+        <div className="fallback-cover">
+          <small>HISTÓRIA POLÍTICA DO BRASIL</small>
+          <strong>OS TRÊS<br />PODERES</strong>
+          <span>1824 · 1891 · 1937 · 1946 · 1988</span>
+        </div>
       </div>
     );
   }
 
-  return <div ref={mount} className="three-mount" />;
+  return <div className="book-canvas" ref={mount} />;
+}
+
+function PowerIcon({ id }) {
+  return <Icon name={id === 'executivo' ? 'building' : id === 'legislativo' ? 'landmark' : 'scale'} size={44} />;
 }
 
 function Quiz() {
   const questions = [
-    ['Quem administra o país e executa políticas públicas?', ['Legislativo', 'Executivo', 'Judiciário'], 1],
-    ['Quem cria leis e fiscaliza o Executivo?', ['Legislativo', 'Executivo', 'Judiciário'], 0],
-    ['Quem protege a Constituição e julga conflitos?', ['Executivo', 'Legislativo', 'Judiciário'], 2],
-    ['Por que os poderes são separados?', ['Para concentrar decisões', 'Para evitar abusos e criar equilíbrio', 'Para eliminar eleições'], 1],
+    ['Qual Constituição brasileira criou o Poder Moderador?', ['1891', '1824', '1988'], 1],
+    ['Quem aprova leis e fiscaliza politicamente o Executivo?', ['Legislativo', 'Judiciário', 'Ministério Público'], 0],
+    ['O município possui Poder Judiciário próprio?', ['Sim', 'Não', 'Somente capitais'], 1],
+    ['O que melhor resume os freios e contrapesos?', ['Um Poder controla todos os demais', 'Poderes sem qualquer contato', 'Controles recíprocos para limitar abusos'], 2],
+    ['Qual Constituição marca a redemocratização contemporânea?', ['1937', '1967', '1988'], 2],
   ];
 
   const [index, setIndex] = useState(0);
@@ -364,21 +455,20 @@ function Quiz() {
   const [score, setScore] = useState(0);
   const done = index >= questions.length;
 
-  const choose = (optionIndex) => {
+  const choose = (option) => {
     if (selected !== null) return;
-    setSelected(optionIndex);
-    if (optionIndex === questions[index][2]) setScore((s) => s + 1);
-
+    setSelected(option);
+    if (option === questions[index][2]) setScore((value) => value + 1);
     setTimeout(() => {
       setSelected(null);
-      setIndex((v) => v + 1);
-    }, 700);
+      setIndex((value) => value + 1);
+    }, 750);
   };
 
   return (
-    <div className="quiz-shell">
-      <div className="quiz-head">
-        <span>QUIZ DA TURMA</span>
+    <div className="quiz-card">
+      <div className="quiz-topline">
+        <span>PERGUNTA AO PLENÁRIO</span>
         <b>{done ? 'FIM' : `${index + 1} / ${questions.length}`}</b>
       </div>
 
@@ -386,25 +476,25 @@ function Quiz() {
         {!done ? (
           <motion.div
             key={index}
-            className="quiz-body"
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -24 }}
+            className="quiz-content"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
           >
             <h3>{questions[index][0]}</h3>
             <div className="quiz-options">
-              {questions[index][1].map((option, optionIndex) => {
+              {questions[index][1].map((answer, answerIndex) => {
                 let state = '';
                 if (selected !== null) {
-                  if (optionIndex === selected) state = optionIndex === questions[index][2] ? 'correct' : 'wrong';
-                  else if (optionIndex === questions[index][2]) state = 'correct';
+                  if (answerIndex === selected) state = answerIndex === questions[index][2] ? 'correct' : 'wrong';
+                  else if (answerIndex === questions[index][2]) state = 'correct';
                   else state = 'dim';
                 }
 
                 return (
-                  <button key={option} className={`quiz-option ${state}`} onClick={() => choose(optionIndex)}>
-                    <span>{String.fromCharCode(65 + optionIndex)}</span>
-                    {option}
+                  <button key={answer} className={`quiz-option ${state}`} onClick={() => choose(answerIndex)}>
+                    <span>{String.fromCharCode(65 + answerIndex)}</span>
+                    {answer}
                   </button>
                 );
               })}
@@ -412,15 +502,15 @@ function Quiz() {
           </motion.div>
         ) : (
           <motion.div
-            key="result"
+            key="done"
             className="quiz-result"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
           >
-            <Icon name="spark" size={44} />
-            <h3>{score}/{questions.length}</h3>
-            <p>{score === questions.length ? 'Gabaritou. A democracia sobreviveu ao teste.' : 'Boa. Agora a turma já sabe onde cada poder entra em cena.'}</p>
-            <button onClick={() => { setIndex(0); setSelected(null); setScore(0); }}>Refazer quiz</button>
+            <Icon name="spark" size={42} />
+            <strong>{score}/{questions.length}</strong>
+            <p>{score >= 4 ? 'A turma já pode sair daqui discutindo Constituição no recreio.' : 'Boa. Repassar a linha do tempo já coloca tudo no lugar.'}</p>
+            <button onClick={() => { setIndex(0); setSelected(null); setScore(0); }}>Recomeçar</button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -431,15 +521,14 @@ function Quiz() {
 function App() {
   const [activePower, setActivePower] = useState(0);
   const [presenting, setPresenting] = useState(false);
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [chapterIndex, setChapterIndex] = useState(0);
   const halo = useRef(null);
-
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
   const power = powers[activePower];
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.02, smoothWheel: true });
     let raf;
     const frame = (time) => {
       lenis.raf(time);
@@ -454,10 +543,9 @@ function App() {
 
   useEffect(() => {
     const move = (event) => {
-      if (!halo.current) return;
-      halo.current.animate(
+      halo.current?.animate(
         { transform: `translate3d(${event.clientX - 190}px, ${event.clientY - 190}px, 0)` },
-        { duration: 450, fill: 'forwards' }
+        { duration: 650, fill: 'forwards' }
       );
     };
     window.addEventListener('pointermove', move);
@@ -465,14 +553,14 @@ function App() {
   }, []);
 
   const go = (delta) => {
-    const next = Math.max(0, Math.min(slideIds.length - 1, slideIndex + delta));
-    setSlideIndex(next);
-    document.getElementById(slideIds[next])?.scrollIntoView({ behavior: 'smooth' });
+    const next = Math.max(0, Math.min(chapters.length - 1, chapterIndex + delta));
+    setChapterIndex(next);
+    document.getElementById(chapters[next])?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
     if (!presenting) return;
-    const key = (event) => {
+    const onKey = (event) => {
       if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(event.key)) {
         event.preventDefault();
         go(1);
@@ -483,14 +571,14 @@ function App() {
       }
       if (event.key === 'Escape') setPresenting(false);
     };
-    window.addEventListener('keydown', key);
-    return () => window.removeEventListener('keydown', key);
-  }, [presenting, slideIndex]);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [presenting, chapterIndex]);
 
   const startPresentation = async () => {
     setPresenting(true);
-    setSlideIndex(0);
-    document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' });
+    setChapterIndex(0);
+    document.getElementById('capa')?.scrollIntoView({ behavior: 'smooth' });
     try {
       await document.documentElement.requestFullscreen?.();
     } catch {}
@@ -505,331 +593,504 @@ function App() {
 
   return (
     <div className={presenting ? 'presentation' : ''}>
-      <div className="grid-bg" />
-      <div className="halo" ref={halo} />
-      <motion.div className="progress" style={{ scaleX: progress }} />
+      <div className="paper-noise" />
+      <div className="cursor-halo" ref={halo} />
+      <motion.div className="reading-progress" style={{ scaleX: progress }} />
 
       <header className="topbar">
-        <a className="brand" href="#inicio">
-          <div className="brand-badge">CEJ</div>
+        <a className="brand" href="#capa">
+          <span className="seal">CEJ</span>
           <div>
-            <strong>HISTÓRIA</strong>
-            <span>Os Três Poderes</span>
+            <strong>SEMINÁRIO DE HISTÓRIA</strong>
+            <small>Quem governa o Brasil?</small>
           </div>
         </a>
 
         <nav>
-          <a href="#poderes">Poderes</a>
-          <a href="#equilibrio">Equilíbrio</a>
-          <a href="#historia">História</a>
-          <a href="#problema">Questão</a>
-          <button className="present-btn" onClick={startPresentation}>
-            <Icon name="expand" size={15} />
-            Apresentar
+          <a href="#poderes">Os Poderes</a>
+          <a href="#constituicoes">Constituições</a>
+          <a href="#problema">Questão central</a>
+          <button onClick={startPresentation}>
+            <Icon name="expand" size={15} /> Apresentar
           </button>
         </nav>
       </header>
 
       <main>
-        <section id="inicio" className="hero">
+        <section id="capa" className="hero chapter-page">
           <div className="hero-copy">
-            <motion.div className="kicker" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
-              <span>GRUPO 1</span><i /> EDUCAÇÃO POLÍTICA · HISTÓRIA
-            </motion.div>
+            <motion.span className="edition" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              GRUPO 1 · EDUCAÇÃO POLÍTICA, PODERES E VOTO NO BRASIL
+            </motion.span>
 
-            <motion.h1 initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12, duration: 0.8 }}>
-              Quem governa<br />o <em>Brasil?</em>
+            <motion.h1 initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}>
+              Quem governa<br /><em>o Brasil?</em>
             </motion.h1>
 
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-              Uma experiência interativa sobre <strong>Executivo</strong>, <strong>Legislativo</strong> e <strong>Judiciário</strong>,
-              sua evolução histórica e o motivo de o poder não ficar concentrado em uma única instituição.
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.38 }}>
+              Um seminário em formato de <strong>livro de história interativo</strong> sobre a divisão do poder no Brasil,
+              suas instituições, suas Constituições e os momentos em que esse equilíbrio foi fortalecido ou enfraquecido.
             </motion.p>
 
-            <motion.div className="hero-actions" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.56 }}>
-              <a className="primary" href="#contexto">
-                Começar seminário <Icon name="down" size={17} />
-              </a>
-              <button className="secondary" onClick={startPresentation}>
-                <Icon name="expand" size={17} /> Modo apresentação
-              </button>
+            <motion.div className="hero-actions" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.52 }}>
+              <a href="#abertura" className="ink-button">Abrir o livro <Icon name="down" size={16} /></a>
+              <button className="paper-button" onClick={startPresentation}><Icon name="expand" size={16} /> Modo seminário</button>
             </motion.div>
 
-            <div className="micro">
-              <span><Icon name="shield" size={15} /> Constituição</span>
-              <span><Icon name="eye" size={15} /> Freios e contrapesos</span>
-              <span><Icon name="book" size={15} /> História</span>
+            <div className="hero-index">
+              <span>1824</span><i />
+              <span>1891</span><i />
+              <span>1937</span><i />
+              <span>1946</span><i />
+              <span>1988</span>
             </div>
           </div>
 
-          <motion.div className="hero-scene" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-            <ThreeHero />
-            <div className="scene-tag t1"><i style={{ background: COLORS.executivo }} /> Executivo</div>
-            <div className="scene-tag t2"><i style={{ background: COLORS.legislativo }} /> Legislativo</div>
-            <div className="scene-tag t3"><i style={{ background: COLORS.judiciario }} /> Judiciário</div>
+          <motion.div className="hero-book" initial={{ opacity: 0, scale: 0.94, rotateY: 8 }} animate={{ opacity: 1, scale: 1, rotateY: 0 }} transition={{ duration: 1 }}>
+            <BookScene />
           </motion.div>
         </section>
 
-        <section id="contexto" className="section">
-          <SectionLabel n={1}>O ponto de partida</SectionLabel>
-          <div className="context-grid">
-            <Reveal className="context panel">
-              <h2>Três poderes.<br /><span>Um Estado.</span></h2>
+        <section id="abertura" className="section chapter-page">
+          <ChapterLabel number={1}>O problema do poder</ChapterLabel>
+          <div className="spread">
+            <Reveal className="prose-page">
+              <span className="dropcap">P</span>
               <p>
-                A Constituição de 1988 organiza o Estado brasileiro com três Poderes independentes e harmônicos.
-                Cada um possui funções próprias e, ao mesmo tempo, mecanismos para limitar e fiscalizar os demais.
+                Toda organização política enfrenta uma pergunta antiga: <strong>quem decide e quem limita quem decide?</strong>
+                Um Estado precisa agir, criar regras e resolver conflitos. O risco aparece quando todas essas funções ficam
+                concentradas no mesmo centro de autoridade.
               </p>
-              <div className="constitution">
-                <b>ART. 2º</b>
+              <p>
+                A Constituição brasileira de 1988 responde a esse problema organizando o Estado em três Poderes
+                “independentes e harmônicos entre si”: Legislativo, Executivo e Judiciário. A independência impede submissão
+                completa; a harmonia exige convivência institucional e controles recíprocos.
+              </p>
+              <blockquote>
+                <Icon name="quote" size={24} />
                 <p>“São Poderes da União, independentes e harmônicos entre si, o Legislativo, o Executivo e o Judiciário.”</p>
-              </div>
+                <cite>Constituição Federal de 1988, art. 2º</cite>
+              </blockquote>
             </Reveal>
 
-            <Reveal className="stats panel">
-              <div className="stat big"><strong>3</strong><span>poderes constitucionais</span></div>
-              <div className="stat row"><strong>1</strong><span>objetivo central<br />evitar abuso e concentração</span></div>
-              <div className="stat row"><strong>1988</strong><span>Constituição<br />atualmente em vigor</span></div>
+            <Reveal>
+              <HistoricalImage
+                src={IMG.congress}
+                alt="Palácio do Congresso Nacional em Brasília"
+                caption="Palácio do Congresso Nacional, Brasília."
+                source="Wikimedia Commons"
+                className="hero-photo"
+              />
+              <div className="margin-note">
+                <b>IDEIA-CHAVE</b>
+                <p>Separar os Poderes não significa colocá-los em mundos diferentes. O sistema funciona justamente porque eles se cruzam, limitam e fiscalizam.</p>
+              </div>
             </Reveal>
           </div>
         </section>
 
-        <section id="poderes" className="section">
-          <SectionLabel n={2}>Conheça cada poder</SectionLabel>
-          <Reveal className="title-row">
-            <h2>Quem faz <span>o quê?</span></h2>
-            <p>Selecione um poder para abrir sua função, estrutura e exemplos.</p>
+        <section id="origem" className="section chapter-page">
+          <ChapterLabel number={2}>De onde vem a ideia de dividir o poder?</ChapterLabel>
+
+          <Reveal className="chapter-heading">
+            <h2>Antes de ser uma regra brasileira,<br />a separação era uma <em>ideia política.</em></h2>
+            <p>
+              A tradição constitucional moderna desenvolveu a defesa de que funções estatais diferentes deveriam ser
+              distribuídas entre instituições distintas. Montesquieu, no século XVIII, tornou-se uma referência clássica
+              dessa formulação.
+            </p>
           </Reveal>
 
-          <div className="powers-layout">
-            <Reveal className="power-list">
+          <div className="origin-grid">
+            <Reveal className="origin-card">
+              <span>01</span>
+              <h3>Evitar o poder absoluto</h3>
+              <p>Quando a mesma autoridade cria a regra, executa a regra e julga a própria atuação, os controles ficam frágeis.</p>
+            </Reveal>
+            <Reveal className="origin-card">
+              <span>02</span>
+              <h3>Distribuir funções</h3>
+              <p>Governar, legislar e julgar passam a ser funções com centros institucionais próprios.</p>
+            </Reveal>
+            <Reveal className="origin-card">
+              <span>03</span>
+              <h3>Criar limites</h3>
+              <p>O objetivo não é paralisar o Estado, mas impedir que uma instituição possa agir sem qualquer controle.</p>
+            </Reveal>
+          </div>
+
+          <Reveal className="archive-strip">
+            <HistoricalImage
+              src={IMG.pedro}
+              alt="Retrato de Dom Pedro I"
+              caption="Dom Pedro I, primeiro imperador do Brasil."
+              source="Museu Imperial / Wikimedia Commons"
+            />
+            <div className="archive-copy">
+              <span>NO BRASIL</span>
+              <h3>1824: a separação chegou com uma particularidade.</h3>
+              <p>
+                A Constituição do Império adotou Legislativo, Executivo e Judiciário, mas acrescentou um quarto poder:
+                o <strong>Poder Moderador</strong>, entregue ao imperador. Essa arquitetura dava ao monarca instrumentos
+                importantes de intervenção sobre o funcionamento político.
+              </p>
+            </div>
+          </Reveal>
+        </section>
+
+        <section id="poderes" className="section chapter-page">
+          <ChapterLabel number={3}>Anatomia dos Três Poderes</ChapterLabel>
+
+          <Reveal className="chapter-heading">
+            <h2>Três instituições,<br /><em>três funções centrais.</em></h2>
+            <p>Clique nos marcadores para trocar de página e explorar cada Poder.</p>
+          </Reveal>
+
+          <div className="power-book">
+            <div className="power-tabs">
               {powers.map((item, index) => (
                 <button
                   key={item.id}
-                  className={`power-btn ${activePower === index ? 'active' : ''}`}
-                  style={{ '--power': COLORS[item.id] }}
+                  className={activePower === index ? 'active' : ''}
+                  style={{ '--accent': COLORS[item.id] }}
                   onClick={() => setActivePower(index)}
                 >
-                  <span>{item.index}</span>
+                  <span>{item.number}</span>
                   <div>
                     <strong>{item.title}</strong>
-                    <small>{item.role}</small>
+                    <small>{item.short}</small>
                   </div>
-                  <Icon name="chevron" size={18} />
                 </button>
               ))}
-            </Reveal>
+            </div>
 
             <AnimatePresence mode="wait">
               <motion.article
                 key={power.id}
-                className="power-detail"
-                style={{ '--power': COLORS[power.id] }}
-                initial={{ opacity: 0, x: 28, scale: 0.985 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -22 }}
+                className="power-page"
+                style={{ '--accent': COLORS[power.id] }}
+                initial={{ opacity: 0, x: 28, rotateY: 2 }}
+                animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.36 }}
               >
-                <div className="monogram">
-                  <i className="ring r1" />
-                  <i className="ring r2" />
-                  <i className="ring r3" />
+                <div className="power-emblem">
+                  <span>{power.number}</span>
                   <PowerIcon id={power.id} />
                 </div>
 
-                <div className="detail-copy">
-                  <span className="detail-kicker">{power.index} / {power.title.toUpperCase()}</span>
-                  <h3>{power.role}</h3>
-                  <p>{power.summary}</p>
+                <div className="power-copy">
+                  <small>FUNÇÃO CENTRAL</small>
+                  <h3>{power.short}</h3>
+                  <p className="lead">{power.lead}</p>
+                  {power.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+
                   <ul>
-                    {power.items.map((text) => (
-                      <li key={text}>
-                        <Icon name="check" size={17} />
-                        <span>{text}</span>
-                      </li>
+                    {power.bullets.map((bullet) => (
+                      <li key={bullet}><Icon name="check" size={16} /><span>{bullet}</span></li>
                     ))}
                   </ul>
-                  <div className="phrase">{power.phrase}</div>
+
+                  <aside>
+                    <b>NOTA DE MARGEM</b>
+                    <p>{power.note}</p>
+                  </aside>
                 </div>
               </motion.article>
             </AnimatePresence>
           </div>
         </section>
 
-        <section id="esferas" className="section">
-          <SectionLabel n={3}>Da União ao município</SectionLabel>
-          <Reveal className="title-row">
-            <h2>O mesmo sistema,<br /><span>três escalas.</span></h2>
-            <p>Veja como os poderes aparecem em diferentes níveis da Federação.</p>
-          </Reveal>
+        <section id="equilibrio" className="section chapter-page">
+          <ChapterLabel number={4}>Freios e contrapesos</ChapterLabel>
 
-          <div className="sphere-grid">
-            <Reveal className="sphere federal">
-              <span>UNIÃO</span>
-              <Icon name="crown" size={48} />
-              <h3>Brasil</h3>
-              <dl>
-                <div><dt>Executivo</dt><dd>Presidente da República</dd></div>
-                <div><dt>Legislativo</dt><dd>Congresso Nacional: Câmara + Senado</dd></div>
-                <div><dt>Judiciário</dt><dd>STF, STJ e Justiça Federal</dd></div>
-              </dl>
-            </Reveal>
-
-            <Reveal className="sphere estadual">
-              <span>ESTADO</span>
-              <Icon name="landmark" size={48} />
-              <h3>Santa Catarina</h3>
-              <dl>
-                <div><dt>Executivo</dt><dd>Governador</dd></div>
-                <div><dt>Legislativo</dt><dd>Assembleia Legislativa</dd></div>
-                <div><dt>Judiciário</dt><dd>Tribunal de Justiça</dd></div>
-              </dl>
-            </Reveal>
-
-            <Reveal className="sphere municipal">
-              <span>MUNICÍPIO</span>
-              <Icon name="building" size={48} />
-              <h3>Jaraguá do Sul</h3>
-              <dl>
-                <div><dt>Executivo</dt><dd>Prefeito</dd></div>
-                <div><dt>Legislativo</dt><dd>Câmara de Vereadores</dd></div>
-                <div><dt>Judiciário</dt><dd>Não possui Judiciário próprio</dd></div>
-              </dl>
-            </Reveal>
-          </div>
-        </section>
-
-        <section id="equilibrio" className="section">
-          <SectionLabel n={4}>Freios e contrapesos</SectionLabel>
-          <div className="checks-grid">
-            <Reveal className="checks">
-              <h2>Ninguém manda<br /><span>sozinho.</span></h2>
+          <div className="balance-layout">
+            <Reveal className="balance-copy">
+              <h2>O sistema funciona porque<br /><em>ninguém tem a última palavra em tudo.</em></h2>
               <p>
-                Separar poderes não significa isolá-los. Eles se relacionam, fiscalizam e limitam uns aos outros
-                para reduzir o risco de abusos.
+                Em vez de uma separação rígida, a Constituição cria pontos de contato. Cada Poder tem autonomia,
+                mas determinadas decisões dependem da atuação ou do controle de outro.
               </p>
 
-              <div className="check-list">
-                <div className="check"><span>01</span><div><h4>Legislativo → Executivo</h4><p>Fiscaliza, aprova orçamento e cria leis.</p></div></div>
-                <div className="check"><span>02</span><div><h4>Executivo → Legislativo</h4><p>Pode sancionar ou vetar projetos aprovados.</p></div></div>
-                <div className="check"><span>03</span><div><h4>Judiciário → Poder público</h4><p>Pode afastar atos incompatíveis com a Constituição.</p></div></div>
+              <div className="checks-list">
+                <div>
+                  <span>01</span>
+                  <p><strong>O Congresso aprova uma lei.</strong> O Presidente pode sancioná-la ou vetá-la.</p>
+                </div>
+                <div>
+                  <span>02</span>
+                  <p><strong>O veto não encerra necessariamente a história.</strong> O Congresso pode apreciá-lo e, nas condições constitucionais, derrubá-lo.</p>
+                </div>
+                <div>
+                  <span>03</span>
+                  <p><strong>Uma lei em vigor ainda pode ser questionada.</strong> O Judiciário pode exercer controle de constitucionalidade.</p>
+                </div>
+                <div>
+                  <span>04</span>
+                  <p><strong>Há controles cruzados na escolha de autoridades.</strong> O Presidente indica ministros do STF e o Senado aprecia essas indicações.</p>
+                </div>
               </div>
             </Reveal>
 
-            <Reveal>
-              <div className="network">
-                <div className="network-core">
-                  <Icon name="scale" size={42} />
-                  <strong>Equilíbrio</strong>
-                  <small>freios + contrapesos</small>
-                </div>
-                <div className="network-node n1"><Icon name="building" size={30} /><b>Executivo</b></div>
-                <div className="network-node n2"><Icon name="landmark" size={30} /><b>Legislativo</b></div>
-                <div className="network-node n3"><Icon name="scale" size={30} /><b>Judiciário</b></div>
-                <svg className="network-links" viewBox="0 0 600 470" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M300 90 C230 130 160 215 125 345" />
-                  <path d="M300 90 C370 130 440 215 475 345" />
-                  <path d="M125 345 C245 405 355 405 475 345" />
-                </svg>
+            <Reveal className="balance-visual">
+              <div className="scale-stage">
+                <span className="scale-line" />
+                <div className="scale-center"><Icon name="scale" size={54} /><b>equilíbrio</b></div>
+                <div className="scale-node node-exe"><Icon name="building" size={30} /><strong>Executivo</strong></div>
+                <div className="scale-node node-leg"><Icon name="landmark" size={30} /><strong>Legislativo</strong></div>
+                <div className="scale-node node-jud"><Icon name="scale" size={30} /><strong>Judiciário</strong></div>
+              </div>
+              <div className="annotation">
+                <span>↑</span>
+                <p>Os controles não existem para “atrapalhar” o governo. Eles existem para tornar o exercício do poder juridicamente limitado e politicamente fiscalizável.</p>
               </div>
             </Reveal>
           </div>
         </section>
 
-        <section id="historia" className="section">
-          <SectionLabel n={5}>Relação histórica</SectionLabel>
-          <Reveal className="title-row">
-            <h2>O equilíbrio foi<br /><span>construído no tempo.</span></h2>
-            <p>A organização dos poderes mudou junto com os regimes políticos e as Constituições brasileiras.</p>
+        <section id="esferas" className="section chapter-page">
+          <ChapterLabel number={5}>Do Brasil ao município</ChapterLabel>
+
+          <Reveal className="chapter-heading">
+            <h2>O mesmo princípio aparece<br /><em>em escalas diferentes.</em></h2>
+            <p>A estrutura varia conforme a esfera federativa.</p>
           </Reveal>
 
-          <div className="timeline">
-            {history.map(([year, title, text]) => (
-              <Reveal key={year} className="time-card">
-                <span className="year">{year}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
+          <div className="sphere-table">
+            <Reveal className="sphere-row header">
+              <span>ESFERA</span><span>EXECUTIVO</span><span>LEGISLATIVO</span><span>JUDICIÁRIO</span>
+            </Reveal>
+            <Reveal className="sphere-row">
+              <strong>União</strong><span>Presidente da República</span><span>Congresso Nacional</span><span>STF, STJ e Justiça Federal, entre outros ramos</span>
+            </Reveal>
+            <Reveal className="sphere-row">
+              <strong>Estado</strong><span>Governador</span><span>Assembleia Legislativa</span><span>Tribunal de Justiça e juízes estaduais</span>
+            </Reveal>
+            <Reveal className="sphere-row">
+              <strong>Município</strong><span>Prefeito</span><span>Câmara de Vereadores</span><span><em>Não possui Poder Judiciário municipal próprio</em></span>
+            </Reveal>
+          </div>
+
+          <Reveal className="curiosity">
+            <b>CURIOSIDADE QUE PODE CAIR NA PERGUNTA DO PROFESSOR</b>
+            <p>
+              A existência de prefeito e vereadores não significa que todo município tenha “três poderes municipais”.
+              A Justiça que atua em causas locais pertence às estruturas estadual ou federal, conforme o caso.
+            </p>
+          </Reveal>
+        </section>
+
+        <section id="constituicoes" className="section chapter-page">
+          <ChapterLabel number={6}>O poder através das Constituições</ChapterLabel>
+
+          <Reveal className="chapter-heading">
+            <h2>Um país, várias Constituições,<br /><em>diferentes equilíbrios.</em></h2>
+            <p>
+              A história constitucional brasileira mostra que a relação entre os Poderes muda quando o regime político muda.
+              Aqui está o fio principal para o seminário.
+            </p>
+          </Reveal>
+
+          <div className="constitution-timeline">
+            {constitutions.map((item, index) => (
+              <Reveal key={item.year} className={`constitution-entry ${item.image ? 'with-image' : ''}`}>
+                <div className="timeline-year">
+                  <span>{item.year}</span>
+                  <i />
+                </div>
+                <div className="timeline-copy">
+                  <small>{item.tone}</small>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+                {item.image && (
+                  <HistoricalImage
+                    src={item.image}
+                    alt={`${item.title} — ${item.year}`}
+                    caption={`${item.year} — ${item.title}`}
+                    source={item.source}
+                  />
+                )}
               </Reveal>
             ))}
           </div>
         </section>
 
-        <section id="problema" className="section">
-          <SectionLabel n={6}>Questão-problema</SectionLabel>
-          <Reveal className="problem">
-            <Icon name="help" size={56} className="help-icon" />
-            <span className="problem-kicker">A pergunta central do trabalho</span>
-            <h2>Por que é importante que o poder do Estado <em>não fique concentrado</em> em uma única instituição?</h2>
+        <section id="rupturas" className="section chapter-page">
+          <ChapterLabel number={7}>Quando o equilíbrio enfraquece</ChapterLabel>
 
-            <div className="answers">
-              <div className="answer bad">
-                <span>CONCENTRAÇÃO</span>
-                <h3>Mais risco</h3>
-                <p>Facilita abusos, enfraquece a fiscalização, reduz controles e pode ameaçar direitos e liberdades.</p>
+          <div className="rupture-grid">
+            <Reveal className="rupture-copy">
+              <h2>Separação de Poderes também é uma forma de medir<br /><em>a saúde de um regime político.</em></h2>
+              <p>
+                Em períodos autoritários, uma característica recorrente é a redução da autonomia de instituições de controle,
+                da competição política e da capacidade de fiscalização.
+              </p>
+
+              <div className="rupture-cases">
+                <article>
+                  <span>1937</span>
+                  <h3>Estado Novo</h3>
+                  <p>O fechamento do Congresso e a concentração decisória no Executivo enfraqueceram drasticamente o equilíbrio institucional.</p>
+                </article>
+                <article>
+                  <span>1964–1985</span>
+                  <h3>Regime militar</h3>
+                  <p>Atos Institucionais, restrições políticas e mudanças constitucionais ampliaram o poder do Executivo e limitaram mecanismos democráticos.</p>
+                </article>
               </div>
-              <div className="answer good">
-                <span>SEPARAÇÃO</span>
-                <h3>Mais equilíbrio</h3>
-                <p>Distribui responsabilidades, cria fiscalização mútua e torna decisões públicas sujeitas a limites constitucionais.</p>
+            </Reveal>
+
+            <Reveal>
+              <HistoricalImage
+                src={IMG.vargas}
+                alt="Retrato de Getúlio Vargas"
+                caption="Getúlio Vargas. O Estado Novo começou em 1937."
+                source="Wikimedia Commons"
+                className="portrait-photo"
+              />
+              <div className="archival-caption">
+                <b>LEITURA HISTÓRICA</b>
+                <p>O ponto não é que todo Executivo forte seja autoritário. O problema é quando controles institucionais deixam de funcionar ou podem ser ignorados.</p>
               </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section id="hoje" className="section chapter-page">
+          <ChapterLabel number={8}>Como isso aparece hoje?</ChapterLabel>
+
+          <div className="today-spread">
+            <Reveal>
+              <HistoricalImage
+                src={IMG.promulgacao1988}
+                alt="Promulgação da Constituição de 1988"
+                caption="Promulgação da Constituição Federal de 1988 no Congresso Nacional."
+                source="Wikimedia Commons / Agência Brasil"
+                className="wide-photo"
+              />
+            </Reveal>
+
+            <Reveal className="today-copy">
+              <span className="small-title">DA CONSTITUINTE AO PRESENTE</span>
+              <h2>A Constituição de 1988 é o ponto de referência do sistema atual.</h2>
+              <p>
+                Ela combina separação de Poderes, direitos fundamentais, eleições periódicas, federalismo e mecanismos de controle.
+                Em termos de seminário, o ponto mais importante é perceber que <strong>governar não é apenas executar</strong>:
+                decisões públicas passam por instituições diferentes.
+              </p>
+
+              <div className="law-route">
+                <div><span>1</span><p>Uma proposta é debatida e aprovada no Legislativo.</p></div>
+                <Icon name="arrow" />
+                <div><span>2</span><p>O Executivo sanciona ou veta, conforme o processo constitucional.</p></div>
+                <Icon name="arrow" />
+                <div><span>3</span><p>A aplicação da norma pode chegar ao Judiciário se houver conflito ou dúvida constitucional.</p></div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section id="problema" className="section chapter-page">
+          <ChapterLabel number={9}>A questão central do trabalho</ChapterLabel>
+
+          <Reveal className="problem-page">
+            <span className="problem-number">?</span>
+            <h2>Por que é importante que o poder do Estado não fique concentrado em uma única instituição?</h2>
+
+            <div className="answer-columns">
+              <article>
+                <small>SE HÁ CONCENTRAÇÃO</small>
+                <h3>O risco de abuso cresce</h3>
+                <p>Menos fiscalização, menos possibilidade de revisão e maior dificuldade para impedir decisões arbitrárias.</p>
+              </article>
+              <article>
+                <small>SE HÁ SEPARAÇÃO E CONTROLE</small>
+                <h3>O poder encontra limites</h3>
+                <p>Decisões podem ser debatidas, fiscalizadas, vetadas, revistas ou julgadas conforme regras previamente estabelecidas.</p>
+              </article>
             </div>
 
-            <div className="thesis">
-              <Icon name="shield" size={24} />
-              <p><strong>Conclusão:</strong> o Brasil não é governado por uma única pessoa ou instituição. A democracia depende de instituições diferentes, com funções próprias, limites e controles recíprocos.</p>
+            <blockquote>
+              <Icon name="shield" size={28} />
+              <p>
+                <strong>Resposta do grupo:</strong> a separação dos Poderes não elimina conflitos políticos, mas impede que o Estado
+                dependa da vontade isolada de uma única autoridade. Ela distribui funções, cria controles recíprocos e protege a
+                continuidade das instituições democráticas.
+              </p>
+            </blockquote>
+          </Reveal>
+
+          <Reveal className="glossary">
+            <span className="small-title">GLOSSÁRIO PARA A APRESENTAÇÃO</span>
+            <div className="glossary-grid">
+              {glossary.map(([term, definition]) => (
+                <article key={term}><strong>{term}</strong><p>{definition}</p></article>
+              ))}
             </div>
           </Reveal>
         </section>
 
-        <section id="quiz" className="section">
-          <SectionLabel n={7}>Hora de envolver a turma</SectionLabel>
-          <Reveal className="title-row">
-            <h2>Mini quiz<br /><span>relâmpago.</span></h2>
-            <p>Quatro perguntas para fechar a apresentação com participação da sala.</p>
+        <section id="quiz" className="section chapter-page">
+          <ChapterLabel number={10}>Fechamento interativo</ChapterLabel>
+          <Reveal className="chapter-heading">
+            <h2>Antes de fechar o livro,<br /><em>teste a turma.</em></h2>
+            <p>O quiz funciona bem para os últimos dois minutos do seminário.</p>
           </Reveal>
           <Reveal><Quiz /></Reveal>
         </section>
 
-        <section id="fontes" className="section">
-          <SectionLabel n={8}>Pesquisa e referências</SectionLabel>
-          <Reveal className="title-row">
-            <h2>Fontes<br /><span>institucionais.</span></h2>
-            <p>O trabalho prioriza as fontes oficiais sugeridas no projeto da disciplina.</p>
+        <section id="fontes" className="section chapter-page sources-section">
+          <ChapterLabel number={11}>Fontes, documentos e imagens</ChapterLabel>
+
+          <Reveal className="chapter-heading">
+            <h2>Pesquisa com base<br /><em>institucional e documental.</em></h2>
+            <p>As referências abaixo sustentam o conteúdo e os documentos históricos usados na experiência.</p>
           </Reveal>
 
-          <div className="sources">
+          <div className="source-grid">
             {refs.map(([label, url], index) => (
               <Reveal key={url}>
-                <a className="source" href={url} target="_blank" rel="noreferrer">
+                <a className="source-link" href={url} target="_blank" rel="noreferrer">
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <strong>{label}</strong>
-                  <Icon name="external" size={17} />
+                  <Icon name="external" size={16} />
                 </a>
               </Reveal>
             ))}
           </div>
 
-          <Reveal className="credits">
-            <div className="cej-mark">CEJ</div>
+          <Reveal className="image-credits">
+            <b>CRÉDITOS VISUAIS</b>
+            <p>
+              Imagens históricas provenientes de acervos públicos e páginas do Wikimedia Commons, incluindo Arquivo Nacional,
+              Museu Imperial e Agência Brasil. Cada fotografia ou documento aparece acompanhado de sua indicação de fonte no site.
+            </p>
+          </Reveal>
+
+          <Reveal className="colophon">
+            <span className="seal large">CEJ</span>
             <div>
-              <span>COLÉGIO EVANGÉLICO JARAGUÁ</span>
+              <small>COLÉGIO EVANGÉLICO JARAGUÁ</small>
               <strong>Educação Política, Poderes e Voto no Brasil</strong>
-              <small>História · Grupo 1 · Seminário</small>
+              <p>Grupo 1 · Quem governa o Brasil? Conhecendo os três Poderes</p>
             </div>
           </Reveal>
         </section>
       </main>
 
       <footer>
-        <strong>OS TRÊS PODERES</strong>
-        <p>Seminário interativo de História · Grupo 1</p>
-        <a href="#inicio">Voltar ao topo ↑</a>
+        <span>FIM DO VOLUME</span>
+        <strong>OS TRÊS PODERES NO BRASIL</strong>
+        <a href="#capa">Voltar à capa ↑</a>
       </footer>
 
       {presenting && (
-        <div className="present-controls">
-          <button onClick={() => go(-1)} aria-label="Voltar seção"><Icon name="left" size={19} /></button>
-          <span>{slideIndex + 1} / {slideIds.length}</span>
-          <button onClick={() => go(1)} aria-label="Próxima seção"><Icon name="right" size={19} /></button>
-          <button onClick={stopPresentation} aria-label="Sair da apresentação"><Icon name="close" size={18} /></button>
+        <div className="presentation-controls">
+          <button onClick={() => go(-1)} aria-label="Capítulo anterior"><Icon name="left" size={18} /></button>
+          <span>{chapterIndex + 1} / {chapters.length}</span>
+          <button onClick={() => go(1)} aria-label="Próximo capítulo"><Icon name="right" size={18} /></button>
+          <button onClick={stopPresentation} aria-label="Sair do modo apresentação"><Icon name="close" size={18} /></button>
         </div>
       )}
     </div>
@@ -855,14 +1116,13 @@ class ErrorBoundary extends React.Component {
       return (
         <div className="fatal">
           <div>
-            <b>O site encontrou um erro.</b>
-            <p>Atualize a página. Se continuar, abra em Chrome, Edge ou Firefox.</p>
+            <b>O livro não conseguiu abrir.</b>
+            <p>Atualize a página. Se continuar, tente Chrome, Edge ou Firefox.</p>
             <small>{String(this.state.error?.message || this.state.error)}</small>
           </div>
         </div>
       );
     }
-
     return this.props.children;
   }
 }
